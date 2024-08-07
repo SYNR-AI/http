@@ -277,33 +277,40 @@ class URLSessionConfiguration
   /// the background.
   ///
   /// See [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:](https://developer.apple.com/documentation/foundation/nsurlsessionconfiguration/1407496-backgroundsessionconfigurationwi)
-  factory URLSessionConfiguration.backgroundSession(String identifier) =>
-      URLSessionConfiguration._(
-          ncb.NSURLSessionConfiguration
-              .backgroundSessionConfigurationWithIdentifier_(
-                  linkedLibs, identifier.toNSString(linkedLibs)),
-          isBackground: true);
+  factory URLSessionConfiguration.backgroundSession(String identifier) {
+    Pointer<ncb.ObjCObject> _ret =  ncb.CUPURLSessionConfigurationProxy
+        .cupBackgroundSessionConfigurationWithIdentifier_(
+        helperLibs, identifier.toNSString(linkedLibs));
+    return URLSessionConfiguration._(ncb.NSURLSessionConfiguration.castFromPointer(linkedLibs, _ret, retain: true, release: true)
+        ,isBackground: true);
+  }
 
   /// A configuration that uses caching and saves cookies and credentials.
   ///
   /// See [NSURLSessionConfiguration defaultSessionConfiguration](https://developer.apple.com/documentation/foundation/nsurlsessionconfiguration/1411560-defaultsessionconfiguration)
-  factory URLSessionConfiguration.defaultSessionConfiguration() =>
-      URLSessionConfiguration._(
-          ncb.NSURLSessionConfiguration.castFrom(
-              ncb.NSURLSessionConfiguration.getDefaultSessionConfiguration(
-                  linkedLibs)),
-          isBackground: false);
+  factory URLSessionConfiguration.defaultSessionConfiguration() {
+    Pointer<ncb.ObjCObject> _ret = ncb.CUPURLSessionConfigurationProxy
+        .getCupDefaultSessionConfiguration(
+        helperLibs);
+    return URLSessionConfiguration._(
+        ncb.NSURLSessionConfiguration.castFrom(
+            ncb.NSURLSessionConfiguration.castFromPointer(linkedLibs, _ret, retain: true, release: true)),
+        isBackground: false);
+  }
 
   /// A session configuration that uses no persistent storage for caches,
   /// cookies, or credentials.
   ///
   /// See [NSURLSessionConfiguration ephemeralSessionConfiguration](https://developer.apple.com/documentation/foundation/nsurlsessionconfiguration/1410529-ephemeralsessionconfiguration)
-  factory URLSessionConfiguration.ephemeralSessionConfiguration() =>
-      URLSessionConfiguration._(
-          ncb.NSURLSessionConfiguration.castFrom(
-              ncb.NSURLSessionConfiguration.getEphemeralSessionConfiguration(
-                  linkedLibs)),
-          isBackground: false);
+  factory URLSessionConfiguration.ephemeralSessionConfiguration() {
+    Pointer<ncb.ObjCObject> _ret = ncb.CUPURLSessionConfigurationProxy
+        .getCupEphemeralSessionConfiguration(
+        helperLibs);
+    return URLSessionConfiguration._(
+        ncb.NSURLSessionConfiguration.castFrom(
+            ncb.NSURLSessionConfiguration.castFromPointer(linkedLibs, _ret, retain: true, release: true)),
+        isBackground: false);
+  }
 
   /// Whether connections over a cellular network are allowed.
   ///

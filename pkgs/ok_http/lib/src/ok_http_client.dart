@@ -48,7 +48,7 @@ class OkHttpClient extends BaseClient {
   bool _isClosed = false;
 
   OkHttpClient() {
-    _client = bindings.OkHttpClient.new1();
+    _client = bindings.OkHttpClient_Builder().addInterceptor();
   }
 
   @override
