@@ -47,7 +47,7 @@ public class CUPCronet: NSObject {
             guard let whiteList = config.interceptHostWhiteList else {
                 return false
             }
-            if (whiteList.contains(host)) {
+            if (whiteList.contains(where: { host.hasSuffix($0) })) {
                 return true
             }
             return false
