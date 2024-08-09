@@ -8,12 +8,19 @@
 import Foundation
 import Cronet
 
+public enum CUPCronetHttpCacheMode: Int {
+    case disabled = 1
+    case disk = 2
+    case memory = 3
+}
+
 @objcMembers
 public class CUPCronetConfig: NSObject {
     public var enableHttp2 = true
     public var enableQuic = true
     public var enableBroli = true
     public var enableMetrics = false
+    public var httpCacheMode = CUPCronetHttpCacheMode.disabled
     public var userAgent: String = "Cronet"
     public var interceptHostWhiteList: [String]?
     
@@ -32,12 +39,25 @@ public class CUPCronet: NSObject {
             return
         }
         Cronet.setHttp2Enabled(config.enableHttp2)
-            // 设置支持 QUIC
+        // 设置支持 QUIC
         Cronet.setQuicEnabled(config.enableQuic)
-            // 设置支持 Br 压缩算法，并列的有gzip算法
+        // 设置支持 Br 压缩算法，并列的有gzip算法
         Cronet.setBrotliEnabled(config.enableBroli)
         Cronet.setMetricsEnabled(config.enableMetrics)
         Cronet.setUserAgent(config.userAgent, partial: true)
+        var cacheType = CRNHttpCacheType.disabled
+        switch config.httpCacheMode {
+        case .disabled:
+            cacheType = .disabled
+            break
+        case .disk:
+            cacheType = .disk
+            break
+        case .memory:
+            cacheType = .memory
+            break
+        }
+        Cronet.setHttpCacheType(cacheType)
         Cronet.start()
         Cronet.registerHttpProtocolHandler()
         Cronet.setRequestFilterBlock { request in
