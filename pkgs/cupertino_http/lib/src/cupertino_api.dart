@@ -460,6 +460,17 @@ class URLSessionConfiguration
         interval.inMicroseconds.toDouble() / Duration.microsecondsPerSecond;
   }
 
+
+  Duration get timeoutIntervalForResource => Duration(
+      microseconds:
+      (_nsObject.timeoutIntervalForResource * Duration.microsecondsPerSecond)
+          .round());
+
+  set timeoutIntervalForResource(Duration interval) {
+    _nsObject.timeoutIntervalForResource =
+        interval.inMicroseconds.toDouble() / Duration.microsecondsPerSecond;
+  }
+
   /// Whether tasks should wait for connectivity or fail immediately.
   ///
   /// See [NSURLSessionConfiguration.waitsForConnectivity](https://developer.apple.com/documentation/foundation/nsurlsessionconfiguration/2908812-waitsforconnectivity)
@@ -483,6 +494,7 @@ class URLSessionConfiguration
       'shouldUseExtendedBackgroundIdleMode='
       '$shouldUseExtendedBackgroundIdleMode '
       'timeoutIntervalForRequest=$timeoutIntervalForRequest '
+      'timeoutIntervalForResource=$timeoutIntervalForResource '
       'waitsForConnectivity=$waitsForConnectivity'
       ']';
 }
