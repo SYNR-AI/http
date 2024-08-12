@@ -274,4 +274,26 @@ didOpenWithProtocol:(nullable NSString *)protocol {
   [closed release];
 }
 
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didFinishCollectingMetrics:(NSURLSessionTaskMetrics *)metrics {
+    CUPHTTPTaskConfiguration *config = [taskConfigurations objectForKey:task];
+    NSAssert(config != nil, @"No configuration for task.");
+
+    CUPHTTPForwardedCollectionMetricComplete *forwardedComplete = [[CUPHTTPForwardedCollectionMetricComplete alloc]
+            initWithSession:session task:task metrics: metrics];
+
+
+    Dart_CObject ctype = MessageTypeToCObject(CompletedCollectionMetrics);
+    Dart_CObject cComplete = NSObjectToCObject(forwardedComplete);
+    Dart_CObject* message_carray[] = { &ctype, &cComplete };
+
+    Dart_CObject message_cobj;
+    message_cobj.type = Dart_CObject_kArray;
+    message_cobj.value.as_array.length = 2;
+    message_cobj.value.as_array.values = message_carray;
+
+    [forwardedComplete.lock lock];  // After this line, any attempt to acquire the lock will wait.
+    const bool success = Dart_PostCObject_DL(config.sendPort, &message_cobj);
+    NSAssert(success, @"Dart_PostCObject_DL failed.");
+}
+
 @end

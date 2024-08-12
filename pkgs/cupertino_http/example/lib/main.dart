@@ -17,7 +17,6 @@ import 'book.dart';
 void main() {
   final Client httpClient;
   if (Platform.isIOS || Platform.isMacOS) {
-    final config = URLSessionConfiguration.ephemeralSessionConfiguration();
     httpClient = CupertinoClient.defaultSessionConfiguration();
   } else {
     httpClient = IOClient(HttpClient()..userAgent = 'Book Agent');

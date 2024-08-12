@@ -9,7 +9,8 @@ import cupertino_http
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
     let config:CUPCronetConfig = CUPCronetConfig()
-    config.interceptHostWhiteList = ["www.googleapis.com"]
+    config.interceptHostWhiteList = ["googleapis.com"]
+    config.httpCacheMode = .disabled
     CUPCronet.start(config: config)
     GeneratedPluginRegistrant.register(with: self)
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)

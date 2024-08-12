@@ -19,7 +19,7 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/integration_test/ios"
 
 SPEC CHECKSUMS:
-  cupertino_http: cdb595e11b5105253b67d352ca4882be9069ff54
+  cupertino_http: cc9eeab67be7178cd4fba5e2658a69b7e66ab87c
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   integration_test: ce0a3ffa1de96d1a89ca0ac26fca7ea18a749ef4
 

@@ -122,6 +122,23 @@
 
 @end
 
+@implementation CUPHTTPForwardedCollectionMetricComplete
+
+- (id)initWithSession:(NSURLSession *)session task:(NSURLSessionTask *)task metrics:(NSURLSessionTaskMetrics *)metrics {
+    self = [super initWithSession:session task:task];
+    if (self != nil) {
+        self -> _metrics = [metrics retain];
+    }
+    return self;
+}
+
+- (void) dealloc {
+    [self->_metrics release];
+    [super dealloc];
+}
+
+@end
+
 @implementation CUPHTTPForwardedFinishedDownloading
 
 - (id) initWithSession:(NSURLSession *)session

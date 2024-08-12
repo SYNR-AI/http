@@ -97,6 +97,14 @@
 
 @end
 
+@interface CUPHTTPForwardedCollectionMetricComplete: CUPHTTPForwardedDelegate
+
+- (id) initWithSession:(NSURLSession *)session task:(NSURLSessionTask *)task metrics:(NSURLSessionTaskMetrics *)metrics;
+
+@property (nullable, readonly) NSURLSessionTaskMetrics *metrics;
+
+@end
+
 @interface CUPHTTPForwardedFinishedDownloading : CUPHTTPForwardedDelegate
 
 - (id) initWithSession:(NSURLSession *)session

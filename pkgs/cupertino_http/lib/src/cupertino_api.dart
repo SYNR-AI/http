@@ -1140,6 +1140,8 @@ void _setupDelegation(
       onFinishedDownloading,
   void Function(URLSession session, URLSessionTask task, Error? error)?
       onComplete,
+      // void Function(URLSession session, URLSessionTask task, NSURLSessionTaskMetrics? metrics)?
+      // onFinishCollectingMetrics,
   void Function(
           URLSession session, URLSessionWebSocketTask task, String? protocol)?
       onWebSocketTaskOpened,
@@ -1272,6 +1274,28 @@ void _setupDelegation(
           }
         } finally {
           forwardedComplete.finish();
+          responsePort.close();
+        }
+        break;
+      case ncb.MessageType.CompletedCollectionMetrics:
+        final forwardedCompletedCollectionMetrics = ncb.CUPHTTPForwardedCollectionMetricComplete.castFrom(forwardedDelegate);
+        try {
+          if (onFinishCollectingMetrics == null) {
+            break;
+          }
+          ncb.NSURLSessionTaskMetrics? metrics;
+          if (forwardedCompletedCollectionMetrics.metrics != null) {
+              metrics = ncb.NSURLSessionTaskMetrics.castFrom(forwardedCompletedCollectionMetrics.metrics!);
+          }
+          try {
+            // onFinishCollectingMetrics(session, task, metrics);
+          } catch(e) {
+            // TODO(https://github.com/dart-lang/ffigen/issues/386): Package
+            // this exception as an `Error` and call the completion function
+            // with it.
+          }
+        } finally {
+          forwardedCompletedCollectionMetrics.finish();
           responsePort.close();
         }
         break;
