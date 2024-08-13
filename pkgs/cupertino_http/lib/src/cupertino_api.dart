@@ -989,6 +989,208 @@ class URLSessionWebSocketTask extends URLSessionTask {
   String toString() => _toStringHelper('NSURLSessionWebSocketTask');
 }
 
+/// A metrics object for a task.
+///
+/// See [NSURLSessionTaskMetrics](https://developer.apple.com/documentation/foundation/nsurlsessiontaskmetrics)
+class URLSessionTaskMetrics extends _ObjectHolder<ncb.NSURLSessionTaskMetrics> {
+  URLSessionTaskMetrics._(ncb.NSURLSessionTaskMetrics super.c);
+
+    List<URLSessionTaskTransactionMetrics> get transactionMetrics {
+      List<URLSessionTaskTransactionMetrics> metrics = [];
+      int length = _nsObject.transactionMetrics.count;
+      for (int i = 0; i < length; i++) {
+        ncb.NSObject metric = _nsObject.transactionMetrics.objectAtIndex_(i);
+        if (metric != null && ncb.NSURLSessionTaskTransactionMetrics.isInstance(metric)) {
+          ncb.NSURLSessionTaskTransactionMetrics transactionMetrics = ncb.NSURLSessionTaskTransactionMetrics.castFrom(metric);
+          metrics.add(URLSessionTaskTransactionMetrics._(transactionMetrics));
+        }
+      }
+      return metrics;
+    }
+
+
+    int get redirectCount {
+      return _nsObject.redirectCount;
+    }
+
+    double get taskInterval {
+      return _nsObject.taskInterval.duration;
+    }
+
+  @override
+  String toString() => '[URLSessionTaskMetrics '
+      'taskInterval $taskInterval '
+      'redirectCount=$redirectCount '
+      'transactionMetrics=${transactionMetrics.toString()} '
+      ']';
+
+}
+
+/// A metrics object for a task transaction.
+///
+/// See [NSURLSessionTaskTransactionMetrics](https://developer.apple.com/documentation/foundation/nsurlsessiontasktransactionmetrics)
+class URLSessionTaskTransactionMetrics extends _ObjectHolder<ncb.NSURLSessionTaskTransactionMetrics> {
+  URLSessionTaskTransactionMetrics._(ncb.NSURLSessionTaskTransactionMetrics super.c);
+
+    /// The request associated with the transaction.
+    URLRequest? get request {
+      final request = _nsObject.request;
+      if (request == null) {
+        return null;
+      } else {
+        return URLRequest._(request);
+      }
+    }
+
+    URLResponse? get response {
+      final response = _nsObject.response;
+      if (response == null) {
+        return null;
+      } else {
+        return URLResponse._(response);
+      }
+    }
+
+    double? get fetchStartTime {
+      final fetchStartDate = _nsObject.fetchStartDate;
+      if (fetchStartDate == null) {
+        return null;
+      } else {
+        return fetchStartDate.timeIntervalSince1970;
+      }
+    }
+
+    double? get domainLookupStartTime {
+      final domainLookupStartDate = _nsObject.domainLookupStartDate;
+      if (domainLookupStartDate == null) {
+        return null;
+      } else {
+        return domainLookupStartDate.timeIntervalSince1970;
+      }
+    }
+
+  double? get domainLookupEndTime {
+    final domainLookupEndDate = _nsObject.domainLookupEndDate;
+    if (domainLookupEndDate == null) {
+      return null;
+    } else {
+      return domainLookupEndDate.timeIntervalSince1970;
+    }
+  }
+
+  double? get connectStartTime {
+    final connectStartDate = _nsObject.connectStartDate;
+    if (connectStartDate == null) {
+      return null;
+    } else {
+      return connectStartDate.timeIntervalSince1970;
+    }
+  }
+
+  double? get connectEndTime {
+    final connectEndDate = _nsObject.connectEndDate;
+    if (connectEndDate == null) {
+      return null;
+    } else {
+      return connectEndDate.timeIntervalSince1970;
+    }
+  }
+
+  double? get requestStartTime {
+    final requestStartDate = _nsObject.requestStartDate;
+    if (requestStartDate == null) {
+      return null;
+    } else {
+      return requestStartDate.timeIntervalSince1970;
+    }
+  }
+
+  double? get requestEndTime {
+    final requestEndDate = _nsObject.requestEndDate;
+    if (requestEndDate == null) {
+      return null;
+    } else {
+      return requestEndDate.timeIntervalSince1970;
+    }
+  }
+
+  double? get responseStartTime {
+    final responseStartDate = _nsObject.responseStartDate;
+    if (responseStartDate == null) {
+      return null;
+    } else {
+      return responseStartDate.timeIntervalSince1970;
+    }
+  }
+
+  double? get responseEndTime {
+    final responseEndDate = _nsObject.responseEndDate;
+    if (responseEndDate == null) {
+      return null;
+    } else {
+      return responseEndDate.timeIntervalSince1970;
+    }
+  }
+
+  double? get secureConnectionStartTime {
+    final secureConnectionStartDate = _nsObject.secureConnectionStartDate;
+    if (secureConnectionStartDate == null) {
+      return null;
+    } else {
+      return secureConnectionStartDate.timeIntervalSince1970;
+    }
+  }
+
+  double? get secureConnectionEndTime {
+    final secureConnectionEndDate = _nsObject.secureConnectionEndDate;
+    if (secureConnectionEndDate == null) {
+      return null;
+    } else {
+      return secureConnectionEndDate.timeIntervalSince1970;
+    }
+  }
+
+  String? get networkProtocolName {
+      return _nsObject.networkProtocolName?.toString();
+  }
+
+  String? get remoteAddress {
+      return _nsObject.remoteAddress?.toString();
+  }
+
+  int? get remotePort {
+      return _nsObject.remotePort?.intValue;
+  }
+
+  bool? get reusedConnection {
+      return _nsObject.reusedConnection;
+  }
+
+  @override
+  String toString() => '[URLSessionTaskTransactionMetrics '
+      'request url =${request?.url} '
+      'fetchStartTime=$fetchStartTime '
+      'domainLookupStartTime=$domainLookupStartTime '
+      'domainLookupEndTime=$domainLookupEndTime '
+      'connectStartTime=$connectStartTime '
+      'connectEndTime=$connectEndTime '
+      'secureConnectionStartTime=$secureConnectionStartTime '
+      'secureConnectionEndTime=$secureConnectionEndTime '
+      'requestStartTime=$requestStartTime '
+      'responseEndTime=$responseEndTime '
+      'networkProtocolName=$networkProtocolName '
+      'remoteAddress=$remoteAddress '
+      'remotePort=$remotePort '
+      'reusedConnection=$reusedConnection '
+      ']';
+
+
+
+
+
+
+}
+
 /// A request to load a URL.
 ///
 /// See [NSURLRequest](https://developer.apple.com/documentation/foundation/nsurlrequest)
@@ -1152,8 +1354,8 @@ void _setupDelegation(
       onFinishedDownloading,
   void Function(URLSession session, URLSessionTask task, Error? error)?
       onComplete,
-      // void Function(URLSession session, URLSessionTask task, NSURLSessionTaskMetrics? metrics)?
-      // onFinishCollectingMetrics,
+      void Function(URLSession session, URLSessionTask task, URLSessionTaskMetrics? metrics)?
+      onFinishCollectingMetrics,
   void Function(
           URLSession session, URLSessionWebSocketTask task, String? protocol)?
       onWebSocketTaskOpened,
@@ -1295,17 +1497,20 @@ void _setupDelegation(
           if (onFinishCollectingMetrics == null) {
             break;
           }
-          ncb.NSURLSessionTaskMetrics? metrics;
+          URLSessionTaskMetrics? metrics;
           if (forwardedCompletedCollectionMetrics.metrics != null) {
-              metrics = ncb.NSURLSessionTaskMetrics.castFrom(forwardedCompletedCollectionMetrics.metrics!);
+              metrics = URLSessionTaskMetrics._(ncb.NSURLSessionTaskMetrics.castFrom(forwardedCompletedCollectionMetrics.metrics!));
           }
           try {
-            // onFinishCollectingMetrics(session, task, metrics);
+            onFinishCollectingMetrics(session, task, metrics);
           } catch(e) {
             // TODO(https://github.com/dart-lang/ffigen/issues/386): Package
             // this exception as an `Error` and call the completion function
             // with it.
+            print('${e.toString()}');
           }
+        } catch(e) {
+          print('${e.toString()}');
         } finally {
           forwardedCompletedCollectionMetrics.finish();
           responsePort.close();
@@ -1385,6 +1590,8 @@ class URLSession extends _ObjectHolder<ncb.NSURLSession> {
       _onData;
   final void Function(URLSession session, URLSessionTask task, Error? error)?
       _onComplete;
+  final void Function(URLSession session, URLSessionTask task, URLSessionTaskMetrics? metrics)?
+  _onFinishCollectingMetrics;
   final void Function(URLSession session, URLSessionDownloadTask task, Uri uri)?
       _onFinishedDownloading;
   final void Function(
@@ -1407,6 +1614,8 @@ class URLSession extends _ObjectHolder<ncb.NSURLSession> {
         onFinishedDownloading,
     void Function(URLSession session, URLSessionTask task, Error? error)?
         onComplete,
+        void Function(URLSession session, URLSessionTask task, URLSessionTaskMetrics? metrics)?
+        onFinishCollectingMetrics,
     void Function(
             URLSession session, URLSessionWebSocketTask task, String? protocol)?
         onWebSocketTaskOpened,
@@ -1419,6 +1628,7 @@ class URLSession extends _ObjectHolder<ncb.NSURLSession> {
         _onData = onData,
         _onFinishedDownloading = onFinishedDownloading,
         _onComplete = onComplete,
+        _onFinishCollectingMetrics = onFinishCollectingMetrics,
         _onWebSocketTaskOpened = onWebSocketTaskOpened,
         _onWebSocketTaskClosed = onWebSocketTaskClosed;
 
@@ -1480,6 +1690,8 @@ class URLSession extends _ObjectHolder<ncb.NSURLSession> {
         onFinishedDownloading,
     void Function(URLSession session, URLSessionTask task, Error? error)?
         onComplete,
+        void Function(URLSession session, URLSessionTask task, URLSessionTaskMetrics? metrics)?
+        onFinishCollectingMetrics,
     void Function(
             URLSession session, URLSessionWebSocketTask task, String? protocol)?
         onWebSocketTaskOpened,
@@ -1507,6 +1719,7 @@ class URLSession extends _ObjectHolder<ncb.NSURLSession> {
         onData: onData,
         onFinishedDownloading: onFinishedDownloading,
         onComplete: onComplete,
+        onFinishCollectingMetrics: onFinishCollectingMetrics,
         onWebSocketTaskOpened: onWebSocketTaskOpened,
         onWebSocketTaskClosed: onWebSocketTaskClosed);
   }
@@ -1534,6 +1747,7 @@ class URLSession extends _ObjectHolder<ncb.NSURLSession> {
         URLSessionTask._(_nsObject.dataTaskWithRequest_(request._nsObject));
     _setupDelegation(_delegate, this, task,
         onComplete: _onComplete,
+        onFinishCollectingMetrics: _onFinishCollectingMetrics,
         onData: _onData,
         onFinishedDownloading: _onFinishedDownloading,
         onRedirect: _onRedirect,
@@ -1594,6 +1808,7 @@ class URLSession extends _ObjectHolder<ncb.NSURLSession> {
         _nsObject.downloadTaskWithRequest_(request._nsObject));
     _setupDelegation(_delegate, this, task,
         onComplete: _onComplete,
+        onFinishCollectingMetrics: _onFinishCollectingMetrics,
         onData: _onData,
         onFinishedDownloading: _onFinishedDownloading,
         onRedirect: _onRedirect,
@@ -1617,6 +1832,7 @@ class URLSession extends _ObjectHolder<ncb.NSURLSession> {
         _nsObject.webSocketTaskWithRequest_(request._nsObject));
     _setupDelegation(_delegate, this, task,
         onComplete: _onComplete,
+        onFinishCollectingMetrics: _onFinishCollectingMetrics,
         onData: _onData,
         onFinishedDownloading: _onFinishedDownloading,
         onRedirect: _onRedirect,
@@ -1648,6 +1864,7 @@ class URLSession extends _ObjectHolder<ncb.NSURLSession> {
     }
     _setupDelegation(_delegate, this, task,
         onComplete: _onComplete,
+        onFinishCollectingMetrics: _onFinishCollectingMetrics,
         onData: _onData,
         onFinishedDownloading: _onFinishedDownloading,
         onRedirect: _onRedirect,

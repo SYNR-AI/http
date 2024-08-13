@@ -163,6 +163,10 @@ class CupertinoClient extends BaseClient {
 
   static _TaskTracker _tracker(URLSessionTask task) => _tasks[task]!;
 
+  static void _onFinishCollectingMetrics(URLSession session, URLSessionTask task, URLSessionTaskMetrics? metrics) {
+      print("cupertino_client _onFinishCollectingMetrics metrics = ${metrics.toString()}");
+  }
+
   static void _onComplete(
       URLSession session, URLSessionTask task, Error? error) {
     final taskTracker = _tracker(task);
@@ -238,6 +242,7 @@ class CupertinoClient extends BaseClient {
       URLSessionConfiguration config) {
     final session = URLSession.sessionWithConfiguration(config,
         onComplete: _onComplete,
+        onFinishCollectingMetrics:_onFinishCollectingMetrics,
         onData: _onData,
         onRedirect: _onRedirect,
         onResponse: _onResponse);
@@ -402,6 +407,7 @@ class CupertinoClientWithProfile extends CupertinoClient {
     final config = URLSessionConfiguration.defaultSessionConfiguration();
     final session = URLSession.sessionWithConfiguration(config,
         onComplete: CupertinoClient._onComplete,
+        onFinishCollectingMetrics:CupertinoClient._onFinishCollectingMetrics,
         onData: CupertinoClient._onData,
         onRedirect: CupertinoClient._onRedirect,
         onResponse: CupertinoClient._onResponse);

@@ -19,7 +19,7 @@ public class CUPCronetConfig: NSObject {
     public var enableHttp2 = true
     public var enableQuic = true
     public var enableBroli = true
-    public var enableMetrics = false
+    public var enableMetrics = true
     public var httpCacheMode = CUPCronetHttpCacheMode.disabled
     public var userAgent: String = "Cronet"
     public var interceptHostWhiteList: [String]?
