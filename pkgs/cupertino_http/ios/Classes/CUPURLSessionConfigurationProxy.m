@@ -11,16 +11,13 @@
 
 @implementation CUPURLSessionConfigurationProxy
 
-static NSURLSessionConfiguration *_cupDefaultSessionConfiguration;
 
 + (NSURLSessionConfiguration *)cupDefaultSessionConfiguration {
-    if (_cupDefaultSessionConfiguration == NULL) {
-        _cupDefaultSessionConfiguration =  [NSURLSessionConfiguration defaultSessionConfiguration];
-        if (CUPCronet.isCronetStarted) {
-            [Cronet installIntoSessionConfiguration:_cupDefaultSessionConfiguration];
-        }
+    NSURLSessionConfiguration  cupDefaultSessionConfiguration =  [NSURLSessionConfiguration defaultSessionConfiguration];
+    if (CUPCronet.isCronetStarted) {
+        [Cronet installIntoSessionConfiguration:cupDefaultSessionConfiguration];
     }
-    return _cupDefaultSessionConfiguration;
+    return cupDefaultSessionConfiguration;
 }
 
 + (NSURLSessionConfiguration *)cupEphemeralSessionConfiguration {
