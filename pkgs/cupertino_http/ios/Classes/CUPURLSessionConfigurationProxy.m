@@ -13,7 +13,7 @@
 
 
 + (NSURLSessionConfiguration *)cupDefaultSessionConfiguration {
-    NSURLSessionConfiguration  cupDefaultSessionConfiguration =  [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSessionConfiguration  *cupDefaultSessionConfiguration =  [NSURLSessionConfiguration defaultSessionConfiguration];
     if (CUPCronet.isCronetStarted) {
         [Cronet installIntoSessionConfiguration:cupDefaultSessionConfiguration];
     }
