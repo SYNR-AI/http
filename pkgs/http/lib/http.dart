@@ -17,7 +17,7 @@ import 'src/streamed_request.dart';
 export 'src/base_client.dart';
 export 'src/base_request.dart';
 export 'src/base_response.dart'
-    show BaseResponse, BaseResponseWithUrl, HeadersWithSplitValues;
+    show BaseResponse, BaseResponseWithUrl, HeadersWithSplitValues, HttpMetrics;
 export 'src/byte_stream.dart';
 export 'src/client.dart' hide zoneClient;
 export 'src/exception.dart';

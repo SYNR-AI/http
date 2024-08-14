@@ -55,12 +55,15 @@ class Response extends BaseResponse {
   /// available from a [StreamedResponse].
   static Future<Response> fromStream(StreamedResponse response) async {
     final body = await response.stream.toBytes();
-    return Response.bytes(body, response.statusCode,
+    Response finalResponse = Response.bytes(body, response.statusCode,
         request: response.request,
         headers: response.headers,
         isRedirect: response.isRedirect,
         persistentConnection: response.persistentConnection,
         reasonPhrase: response.reasonPhrase);
+
+    finalResponse.metrics = response.metrics;
+    return finalResponse;
   }
 }
 

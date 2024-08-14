@@ -12,6 +12,26 @@ import 'streamed_response.dart';
 ///
 /// Subclasses of [BaseResponse] are usually not constructed manually; instead,
 /// they're returned by [BaseClient.send] or other HTTP client methods.
+
+class HttpMetrics {
+  int? requestStartMs;
+  int? dnsStartMs;
+  int? dnsEndMs;
+  int? connectStartMs;
+  int? connectEndMs;
+  int? sslStartMs;
+  int? sslEndMs;
+  int? sendingStartMs;
+  int? sendingEndMs;
+  int? responseStartMs;
+  int? responseEndMs;
+
+  @override
+  String toString() {
+    return '[HttpMetrics requestStartMs: $requestStartMs, dnsStartMs: $dnsStartMs, dnsEndMs: $dnsEndMs, connectStartMs:$connectStartMs, connectEndMs:$connectEndMs, sslStartMs:$sslStartMs, sslEndMs: $sslEndMs, sendingStartMs: $sendingStartMs, sendingEndMs: $sendingEndMs, responseStartMs: $responseStartMs, responseEndMs: $responseEndMs]';
+  }
+}
+
 abstract class BaseResponse {
   /// The (frozen) request that triggered this response.
   final BaseRequest? request;
@@ -58,6 +78,8 @@ abstract class BaseResponse {
 
   /// Whether the server requested that a persistent connection be maintained.
   final bool persistentConnection;
+
+  HttpMetrics? metrics;
 
   BaseResponse(this.statusCode,
       {this.contentLength,

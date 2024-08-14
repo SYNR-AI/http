@@ -993,14 +993,14 @@ class URLSessionWebSocketTask extends URLSessionTask {
 ///
 /// See [NSURLSessionTaskMetrics](https://developer.apple.com/documentation/foundation/nsurlsessiontaskmetrics)
 class URLSessionTaskMetrics extends _ObjectHolder<ncb.NSURLSessionTaskMetrics> {
-  URLSessionTaskMetrics._(ncb.NSURLSessionTaskMetrics super.c);
+  URLSessionTaskMetrics._(super.c);
 
     List<URLSessionTaskTransactionMetrics> get transactionMetrics {
       List<URLSessionTaskTransactionMetrics> metrics = [];
       int length = _nsObject.transactionMetrics.count;
       for (int i = 0; i < length; i++) {
         ncb.NSObject metric = _nsObject.transactionMetrics.objectAtIndex_(i);
-        if (metric != null && ncb.NSURLSessionTaskTransactionMetrics.isInstance(metric)) {
+        if (ncb.NSURLSessionTaskTransactionMetrics.isInstance(metric)) {
           ncb.NSURLSessionTaskTransactionMetrics transactionMetrics = ncb.NSURLSessionTaskTransactionMetrics.castFrom(metric);
           metrics.add(URLSessionTaskTransactionMetrics._(transactionMetrics));
         }
@@ -1177,6 +1177,8 @@ class URLSessionTaskTransactionMetrics extends _ObjectHolder<ncb.NSURLSessionTas
       'secureConnectionStartTime=$secureConnectionStartTime '
       'secureConnectionEndTime=$secureConnectionEndTime '
       'requestStartTime=$requestStartTime '
+      'requestEndTime=$requestEndTime '
+      'responseStartTime=$responseStartTime '
       'responseEndTime=$responseEndTime '
       'networkProtocolName=$networkProtocolName '
       'remoteAddress=$remoteAddress '
@@ -1361,7 +1363,7 @@ void _setupDelegation(
       onWebSocketTaskOpened,
   void Function(URLSession session, URLSessionWebSocketTask task, int closeCode,
           Data? reason)?
-      onWebSocketTaskClosed,
+      onWebSocketTaskClosed
 }) {
   final responsePort = ReceivePort();
   responsePort.listen((d) {
@@ -1513,7 +1515,6 @@ void _setupDelegation(
           print('${e.toString()}');
         } finally {
           forwardedCompletedCollectionMetrics.finish();
-          responsePort.close();
         }
         break;
       case ncb.MessageType.WebSocketOpened:
@@ -1591,7 +1592,7 @@ class URLSession extends _ObjectHolder<ncb.NSURLSession> {
   final void Function(URLSession session, URLSessionTask task, Error? error)?
       _onComplete;
   final void Function(URLSession session, URLSessionTask task, URLSessionTaskMetrics? metrics)?
-  _onFinishCollectingMetrics;
+      _onFinishCollectingMetrics;
   final void Function(URLSession session, URLSessionDownloadTask task, Uri uri)?
       _onFinishedDownloading;
   final void Function(

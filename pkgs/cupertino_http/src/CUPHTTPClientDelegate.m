@@ -277,16 +277,14 @@ didOpenWithProtocol:(nullable NSString *)protocol {
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didFinishCollectingMetrics:(NSURLSessionTaskMetrics *)metrics {
     CUPHTTPTaskConfiguration *config = [taskConfigurations objectForKey:task];
     NSAssert(config != nil, @"No configuration for task.");
-    NSLog(@"xpxp network duration = %@", @(metrics.taskInterval.duration));
-    for(NSURLSessionTaskTransactionMetrics *transactionMetric in metrics.transactionMetrics) {
-        NSTimeInterval domainLookUp = transactionMetric.domainLookupEndDate.timeIntervalSince1970 - transactionMetric.domainLookupStartDate.timeIntervalSince1970;
-        NSTimeInterval connect = transactionMetric.connectEndDate.timeIntervalSince1970 - transactionMetric.connectStartDate.timeIntervalSince1970;
-        NSTimeInterval secureConnect = transactionMetric.secureConnectionEndDate.timeIntervalSince1970 - transactionMetric.secureConnectionStartDate.timeIntervalSince1970;
-        NSTimeInterval request = transactionMetric.requestEndDate.timeIntervalSince1970 - transactionMetric.requestStartDate.timeIntervalSince1970;
-        NSTimeInterval response = transactionMetric.responseEndDate.timeIntervalSince1970 - transactionMetric.responseStartDate.timeIntervalSince1970;
-        NSLog(@"xpxp network duration = %@ domainLookup = %@, dommainLookUpStart = %@, connect= %@, connectStart = %@, secureConnect = %@, request = %@, requestStart = %@, requestEnd = %@,  response = %@, responseStart = %@, responseEnd = %@", @(metrics.taskInterval.duration),  @(domainLookUp), @(transactionMetric.domainLookupStartDate.timeIntervalSince1970 * 1000.0),  @(connect), @(transactionMetric.connectStartDate.timeIntervalSince1970 * 1000.0),@(secureConnect),@(request), @(transactionMetric.requestStartDate.timeIntervalSince1970 * 1000.0), @(transactionMetric.requestEndDate.timeIntervalSince1970 * 1000.0), @(response), @(transactionMetric.responseStartDate.timeIntervalSince1970 * 1000.0), @(transactionMetric.responseEndDate.timeIntervalSince1970 * 1000.0));
-        NSLog(@"xpxp network metrics = %@", metrics);
-    }
+//    for(NSURLSessionTaskTransactionMetrics *transactionMetric in metrics.transactionMetrics) {
+//        NSTimeInterval domainLookUp = transactionMetric.domainLookupEndDate.timeIntervalSince1970 - transactionMetric.domainLookupStartDate.timeIntervalSince1970;
+//        NSTimeInterval connect = transactionMetric.connectEndDate.timeIntervalSince1970 - transactionMetric.connectStartDate.timeIntervalSince1970;
+//        NSTimeInterval secureConnect = transactionMetric.secureConnectionEndDate.timeIntervalSince1970 - transactionMetric.secureConnectionStartDate.timeIntervalSince1970;
+//        NSTimeInterval request = transactionMetric.requestEndDate.timeIntervalSince1970 - transactionMetric.requestStartDate.timeIntervalSince1970;
+//        NSTimeInterval response = transactionMetric.responseEndDate.timeIntervalSince1970 - transactionMetric.responseStartDate.timeIntervalSince1970;
+//        NSLog(@"didFinishCollectingMetrics duration = %@ domainLookup = %@, dommainLookUpStart = %@, domainLookUpEnd = %@,   connect= %@, connectStart = %@, connectEnd = %@,  secureConnect = %@, request = %@, requestStart = %@, requestEnd = %@,  response = %@, responseStart = %@, responseEnd = %@", @(metrics.taskInterval.duration),  @(domainLookUp), @(transactionMetric.domainLookupStartDate.timeIntervalSince1970 * 1000.0), @(transactionMetric.domainLookupEndDate.timeIntervalSince1970 * 1000.0) , @(connect), @(transactionMetric.connectStartDate.timeIntervalSince1970 * 1000.0),@(transactionMetric.connectEndDate.timeIntervalSince1970 * 1000.0) ,@(secureConnect),@(request), @(transactionMetric.requestStartDate.timeIntervalSince1970 * 1000.0), @(transactionMetric.requestEndDate.timeIntervalSince1970 * 1000.0), @(response), @(transactionMetric.responseStartDate.timeIntervalSince1970 * 1000.0), @(transactionMetric.responseEndDate.timeIntervalSince1970 * 1000.0));
+//    }
     CUPHTTPForwardedCollectionMetricComplete *forwardedComplete = [[CUPHTTPForwardedCollectionMetricComplete alloc]
             initWithSession:session task:task metrics: metrics];
 
@@ -303,6 +301,9 @@ didOpenWithProtocol:(nullable NSString *)protocol {
     [forwardedComplete.lock lock];  // After this line, any attempt to acquire the lock will wait.
     const bool success = Dart_PostCObject_DL(config.sendPort, &message_cobj);
     NSAssert(success, @"Dart_PostCObject_DL failed.");
+
+    [forwardedComplete.lock lock];
+    [forwardedComplete release];
 }
 
 @end

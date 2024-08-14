@@ -15,12 +15,14 @@ import 'cupertino_api.dart';
 final _digitRegex = RegExp(r'^\d+$');
 
 /// This class can be removed when `package:http` v2 is released.
-class _StreamedResponseWithUrl extends StreamedResponse
+///
+
+class StreamedResponseWithUrl extends StreamedResponse
     implements BaseResponseWithUrl {
   @override
   final Uri url;
 
-  _StreamedResponseWithUrl(super.stream, super.statusCode,
+  StreamedResponseWithUrl(super.stream, super.statusCode,
       {required this.url,
       super.contentLength,
       super.request,
@@ -32,6 +34,7 @@ class _StreamedResponseWithUrl extends StreamedResponse
 class _TaskTracker {
   final responseCompleter = Completer<URLResponse>();
   final BaseRequest request;
+  StreamedResponseWithUrl? response;
   final responseController = StreamController<Uint8List>();
   final HttpClientRequestProfile? profile;
   int numRedirects = 0;
@@ -163,8 +166,75 @@ class CupertinoClient extends BaseClient {
 
   static _TaskTracker _tracker(URLSessionTask task) => _tasks[task]!;
 
-  static void _onFinishCollectingMetrics(URLSession session, URLSessionTask task, URLSessionTaskMetrics? metrics) {
-      print("cupertino_client _onFinishCollectingMetrics metrics = ${metrics.toString()}");
+  static void _onFinishCollectingMetrics(
+      URLSession session, URLSessionTask task, URLSessionTaskMetrics? metrics) {
+    print('collecting metric complete');
+    if (metrics != null) {
+      final taskTracker = _tracker(task);
+      if (metrics.transactionMetrics.isNotEmpty) {
+        var transactionMetrics = metrics.transactionMetrics.last;
+        var httpMetrics = HttpMetrics()
+          ..requestStartMs =
+              ((transactionMetrics.fetchStartTime ?? 0) * 1000.0).toInt()
+          ..dnsStartMs =
+              ((transactionMetrics.domainLookupStartTime ?? 0) * 1000.0).toInt()
+          ..dnsEndMs =
+              ((transactionMetrics.domainLookupEndTime ?? 0) * 1000.0).toInt()
+          ..connectStartMs =
+              ((transactionMetrics.connectStartTime ?? 0) * 1000.0).toInt()
+          ..connectEndMs =
+              ((transactionMetrics.connectEndTime ?? 0) * 1000.0).toInt()
+          ..sslStartMs =
+              ((transactionMetrics.secureConnectionStartTime ?? 0) * 1000.0).toInt()
+          ..sslEndMs =
+              ((transactionMetrics.secureConnectionEndTime ?? 0) * 1000.0).toInt()
+          ..sendingStartMs =
+              ((transactionMetrics.requestStartTime ?? 0) * 1000.0).toInt()
+          ..sendingEndMs =
+              ((transactionMetrics.requestEndTime ?? 0) * 1000.0).toInt()
+          ..responseStartMs =
+              ((transactionMetrics.responseStartTime ?? 0) * 1000.0).toInt()
+          ..responseEndMs =
+              ((transactionMetrics.responseEndTime ?? 0) * 1000.0).toInt();
+        taskTracker.response?.metrics = httpMetrics;
+        taskTracker.profile!.addEvent(HttpProfileRequestEvent(
+            timestamp: DateTime.fromMillisecondsSinceEpoch(
+                ((transactionMetrics.fetchStartTime ?? 0) * 1000).toInt(),
+                isUtc: true),
+            name: 'fetchStartTime'));
+        if (transactionMetrics.domainLookupEndTime != null) {
+          taskTracker.profile!.addEvent(HttpProfileRequestEvent(
+              timestamp: DateTime.fromMillisecondsSinceEpoch(
+                  ((transactionMetrics.domainLookupEndTime ?? 0) * 1000)
+                      .toInt(),
+                  isUtc: true),
+              name: 'domainLookup'));
+        }
+
+        if (transactionMetrics.connectEndTime != null) {
+          taskTracker.profile!.addEvent(HttpProfileRequestEvent(
+              timestamp: DateTime.fromMillisecondsSinceEpoch(
+                  ((transactionMetrics.connectEndTime ?? 0) * 1000).toInt(),
+                  isUtc: true),
+              name: 'connectTime'));
+        }
+        taskTracker.profile!.addEvent(HttpProfileRequestEvent(
+            timestamp: DateTime.fromMillisecondsSinceEpoch(
+                ((transactionMetrics.requestEndTime ?? 0) * 1000).toInt(),
+                isUtc: true),
+            name: 'requestWrite'));
+        taskTracker.profile!.addEvent(HttpProfileRequestEvent(
+            timestamp: DateTime.fromMillisecondsSinceEpoch(
+                ((transactionMetrics.responseStartTime ?? 0) * 1000).toInt(),
+                isUtc: true),
+            name: 'serverTime'));
+        taskTracker.profile!.addEvent(HttpProfileRequestEvent(
+            timestamp: DateTime.fromMillisecondsSinceEpoch(
+                ((transactionMetrics.responseEndTime ?? 0) * 1000).toInt(),
+                isUtc: true),
+            name: 'responseReadTime'));
+      }
+    }
   }
 
   static void _onComplete(
@@ -242,7 +312,7 @@ class CupertinoClient extends BaseClient {
       URLSessionConfiguration config) {
     final session = URLSession.sessionWithConfiguration(config,
         onComplete: _onComplete,
-        onFinishCollectingMetrics:_onFinishCollectingMetrics,
+        onFinishCollectingMetrics: _onFinishCollectingMetrics,
         onData: _onData,
         onRedirect: _onRedirect,
         onResponse: _onResponse);
@@ -345,14 +415,13 @@ class CupertinoClient extends BaseClient {
     final taskTracker = _TaskTracker(request, profile);
     _tasks[task] = taskTracker;
     task.resume();
-
     final maxRedirects = request.followRedirects ? request.maxRedirects : 0;
 
     late URLResponse result;
+
     result = await taskTracker.responseCompleter.future;
 
     final response = result as HTTPURLResponse;
-
     if (request.followRedirects && taskTracker.numRedirects > maxRedirects) {
       throw ClientException('Redirect limit exceeded', request.url);
     }
@@ -379,8 +448,7 @@ class CupertinoClient extends BaseClient {
       ..reasonPhrase = _findReasonPhrase(response.statusCode)
       ..startTime = DateTime.now()
       ..statusCode = response.statusCode;
-
-    return _StreamedResponseWithUrl(
+    var streamedResponse = StreamedResponseWithUrl(
       taskTracker.responseController.stream,
       response.statusCode,
       url: taskTracker.lastUrl ?? request.url,
@@ -390,6 +458,8 @@ class CupertinoClient extends BaseClient {
       isRedirect: isRedirect,
       headers: responseHeaders,
     );
+    taskTracker.response = streamedResponse;
+    return streamedResponse;
   }
 }
 
@@ -407,7 +477,7 @@ class CupertinoClientWithProfile extends CupertinoClient {
     final config = URLSessionConfiguration.defaultSessionConfiguration();
     final session = URLSession.sessionWithConfiguration(config,
         onComplete: CupertinoClient._onComplete,
-        onFinishCollectingMetrics:CupertinoClient._onFinishCollectingMetrics,
+        onFinishCollectingMetrics: CupertinoClient._onFinishCollectingMetrics,
         onData: CupertinoClient._onData,
         onRedirect: CupertinoClient._onRedirect,
         onResponse: CupertinoClient._onResponse);
