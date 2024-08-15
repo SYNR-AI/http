@@ -17,8 +17,9 @@ package io.flutter.plugins.cronet_http
 import org.chromium.net.CronetException
 import org.chromium.net.UrlRequest
 import org.chromium.net.UrlResponseInfo
+import org.chromium.net.RequestFinishedInfo
 import java.nio.ByteBuffer
-
+import java.util.concurrent.Executor
 
 class UrlRequestCallbackProxy(val callback: UrlRequestCallbackInterface) : UrlRequest.Callback() {
     public interface UrlRequestCallbackInterface {

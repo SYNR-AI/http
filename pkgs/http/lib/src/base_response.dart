@@ -25,10 +25,12 @@ class HttpMetrics {
   int? sendingEndMs;
   int? responseStartMs;
   int? responseEndMs;
+  bool isSocketReuse = false;
+  int totalTimeMs = 0;
 
   @override
   String toString() {
-    return '[HttpMetrics requestStartMs: $requestStartMs, dnsStartMs: $dnsStartMs, dnsEndMs: $dnsEndMs, connectStartMs:$connectStartMs, connectEndMs:$connectEndMs, sslStartMs:$sslStartMs, sslEndMs: $sslEndMs, sendingStartMs: $sendingStartMs, sendingEndMs: $sendingEndMs, responseStartMs: $responseStartMs, responseEndMs: $responseEndMs]';
+    return '[HttpMetrics requestStartMs: $requestStartMs, dnsStartMs: $dnsStartMs, dnsEndMs: $dnsEndMs, connectStartMs:$connectStartMs, connectEndMs:$connectEndMs, sslStartMs:$sslStartMs, sslEndMs: $sslEndMs, sendingStartMs: $sendingStartMs, sendingEndMs: $sendingEndMs, responseStartMs: $responseStartMs, responseEndMs: $responseEndMs], isSocketReuse: $isSocketReuse, totalTimeMs: $totalTimeMs]';
   }
 }
 

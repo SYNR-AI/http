@@ -15,7 +15,6 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
-  http: ^1.0.0
   http_image_provider: ^0.0.3
   provider: ^6.1.1
 
@@ -34,6 +33,10 @@ dev_dependencies:
   test: ^1.21.1
   web_socket_conformance_tests:
     path: ../../web_socket_conformance_tests/
+
+dependency_overrides:
+  http:
+    path: ../../http/
 
 flutter:
   uses-material-design: true

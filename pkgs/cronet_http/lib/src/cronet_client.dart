@@ -28,6 +28,13 @@ class _StreamedResponseWithUrl extends StreamedResponse
       super.reasonPhrase});
 }
 
+class _HttpClientRequestProfileWithStreamResponse {
+  HttpClientRequestProfile? profile;
+  StreamedResponse? response;
+
+  _HttpClientRequestProfileWithStreamResponse(this.profile);
+}
+
 /// The type of caching to use when making HTTP requests.
 enum CacheMode {
   disabled,
@@ -146,10 +153,92 @@ Map<String, String> _cronetToClientHeaders(
         key.toDartString(releaseOriginal: true).toLowerCase(),
         value.join(',')));
 
+jb.RequestFinishInfoListenerProxy_RequestFinishInfoListenerInterface
+    _requestFinishedInfoListener(
+            BaseRequest request,
+            Completer<StreamedResponse> responseCompleter,
+            _HttpClientRequestProfileWithStreamResponse? profile) =>
+        jb.RequestFinishInfoListenerProxy_RequestFinishInfoListenerInterface
+            .implement(jb
+                .$RequestFinishInfoListenerProxy_RequestFinishInfoListenerInterfaceImpl(
+                    onRequestFinished:
+                        (jb.RequestFinishedInfo requestFinishedInfo) {
+                            var metrics = requestFinishedInfo.getMetrics();
+                            if (requestFinishedInfo.isNull && metrics.isNull) {
+                              return;
+                            }
+                            var httpMetrics = HttpMetrics();
+                            var requestStartDate = metrics.getRequestStart();
+                            if (!requestStartDate.isNull) {
+                              httpMetrics.requestStartMs = requestStartDate.getTime();
+                              requestStartDate.release();
+                            }
+                            var dnsStartDate = metrics.getDnsStart();
+                            if (!dnsStartDate.isNull) {
+                              httpMetrics.dnsStartMs = dnsStartDate.getTime();
+                              dnsStartDate.release();
+                            }
+                            var dnsEndDate = metrics.getDnsEnd();
+                            if (!dnsEndDate.isNull) {
+                              httpMetrics.dnsEndMs = dnsEndDate.getTime();
+                              dnsEndDate.release();
+                            }
+                            var connectionStartDate = metrics.getConnectStart();
+                            if (!connectionStartDate.isNull) {
+                              httpMetrics.connectStartMs = connectionStartDate.getTime();
+                              connectionStartDate.release();
+                            }
+                            var connectionEndDate = metrics.getConnectEnd();
+                            if (!connectionEndDate.isNull) {
+                              httpMetrics.connectEndMs = connectionEndDate.getTime();
+                              connectionEndDate.release();
+                            }
+                            var sslStartDate = metrics.getSslStart();
+                            if (!sslStartDate.isNull) {
+                              httpMetrics.sslStartMs = sslStartDate.getTime();
+                              sslStartDate.release();
+                            }
+                            var sslEndDate = metrics.getSslEnd();
+                            if (!sslEndDate.isNull) {
+                              httpMetrics.sslEndMs = sslEndDate.getTime();
+                              sslEndDate.release();
+                            }
+                            var sendingStartDate = metrics.getSendingStart();
+                            if (!sendingStartDate.isNull) {
+                              httpMetrics.sendingStartMs = sendingStartDate.getTime();
+                              sendingStartDate.release();
+                            }
+                            var sendingEndDate = metrics.getSendingEnd();
+                            if (!sendingEndDate.isNull) {
+                              httpMetrics.sendingEndMs = sendingEndDate.getTime();
+                              sendingEndDate.release();
+                            }
+                            var responseStartDate = metrics.getResponseStart();
+                            if (!responseStartDate.isNull) {
+                              httpMetrics.responseStartMs = responseStartDate.getTime();
+                              responseStartDate.release();
+                            }
+                            var responseEndDate = metrics.getRequestEnd();
+                            if (!responseEndDate.isNull) {
+                              httpMetrics.responseEndMs = responseEndDate.getTime();
+                              responseEndDate.release();
+                            }
+                            var totalTime = metrics.getTotalTimeMs();
+                            if (!totalTime.isNull) {
+                              httpMetrics.totalTimeMs = totalTime.longValue(releaseOriginal: true);
+                            }
+                            var socketReuse = metrics.getSocketReused();
+                            httpMetrics.isSocketReuse = socketReuse;
+                            profile?.response?.metrics = httpMetrics;
+                            // print('request metrics = $httpMetrics');
+                            metrics.release();
+                            requestFinishedInfo.release();
+                        }));
+
 jb.UrlRequestCallbackProxy_UrlRequestCallbackInterface _urlRequestCallbacks(
     BaseRequest request,
     Completer<StreamedResponse> responseCompleter,
-    HttpClientRequestProfile? profile) {
+    _HttpClientRequestProfileWithStreamResponse? profileWithStreamedResponse) {
   StreamController<List<int>>? responseStream;
   JByteBuffer? jByteBuffer;
   var numRedirects = 0;
@@ -176,7 +265,7 @@ jb.UrlRequestCallbackProxy_UrlRequestCallbackInterface _urlRequestCallbacks(
         case final contentLengthHeader?:
           contentLength = int.parse(contentLengthHeader);
       }
-      responseCompleter.complete(_StreamedResponseWithUrl(
+      var streamedResponse = _StreamedResponseWithUrl(
         responseStream!.stream,
         responseInfo.getHttpStatusCode(),
         url: Uri.parse(
@@ -188,10 +277,12 @@ jb.UrlRequestCallbackProxy_UrlRequestCallbackInterface _urlRequestCallbacks(
         request: request,
         isRedirect: false,
         headers: responseHeaders,
-      ));
+      );
+      profileWithStreamedResponse?.response = streamedResponse;
+      responseCompleter.complete(streamedResponse);
 
-      profile?.requestData.close();
-      profile?.responseData
+      profileWithStreamedResponse?.profile?.requestData.close();
+      profileWithStreamedResponse?.profile?.responseData
         ?..contentLength = contentLength
         ..headersCommaValues = responseHeaders
         ..isRedirect = false
@@ -219,7 +310,7 @@ jb.UrlRequestCallbackProxy_UrlRequestCallbackInterface _urlRequestCallbacks(
             isRedirect: true,
             headers: _cronetToClientHeaders(responseInfo.getAllHeaders())));
 
-        profile?.responseData
+        profileWithStreamedResponse?.profile?.responseData
           ?..headersCommaValues = responseHeaders
           ..isRedirect = true
           ..reasonPhrase = responseInfo
@@ -232,7 +323,7 @@ jb.UrlRequestCallbackProxy_UrlRequestCallbackInterface _urlRequestCallbacks(
       }
       ++numRedirects;
       if (numRedirects <= request.maxRedirects) {
-        profile?.responseData.addRedirect(HttpProfileRedirectData(
+        profileWithStreamedResponse?.profile?.responseData.addRedirect(HttpProfileRedirectData(
             statusCode: responseInfo.getHttpStatusCode(),
             // This method is not correct for status codes 303 to 307. Cronet
             // does not seem to have a way to get the method so we'd have to
@@ -250,34 +341,39 @@ jb.UrlRequestCallbackProxy_UrlRequestCallbackInterface _urlRequestCallbacks(
       byteBuffer.flip();
       final data = jByteBuffer!.asUint8List().sublist(0, byteBuffer.remaining);
       responseStream!.add(data);
-      profile?.responseData.bodySink.add(data);
+      profileWithStreamedResponse?.profile?.responseData.bodySink.add(data);
 
       byteBuffer.clear();
       urlRequest.read(byteBuffer);
     },
     onSucceeded: (urlRequest, responseInfo) {
-      responseStream!.sink.close();
-      jByteBuffer?.release();
-      profile?.responseData.close();
+      Timer(Duration(milliseconds: 1), () {
+        responseStream!.sink.close();
+        jByteBuffer?.release();
+        profileWithStreamedResponse?.profile?.responseData.close();
+      });
+
     },
     onFailed: (urlRequest, responseInfo, cronetException) {
       final error = ClientException(
           'Cronet exception: ${cronetException.toString()}', request.url);
-      if (responseStream == null) {
-        responseCompleter.completeError(error);
-      } else {
-        responseStream!.addError(error);
-        responseStream!.close();
-      }
-
-      if (profile != null) {
-        if (profile.requestData.endTime == null) {
-          profile.requestData.closeWithError(error.toString());
+      Timer(Duration(milliseconds: 1), () {
+        if (responseStream == null) {
+          responseCompleter.completeError(error);
         } else {
-          profile.responseData.closeWithError(error.toString());
+          responseStream!.addError(error);
+          responseStream!.close();
         }
-      }
-      jByteBuffer?.release();
+
+        if (profileWithStreamedResponse?.profile != null) {
+          if (profileWithStreamedResponse?.profile?.requestData.endTime == null) {
+            profileWithStreamedResponse?.profile?.requestData.closeWithError(error.toString());
+          } else {
+            profileWithStreamedResponse?.profile?.responseData.closeWithError(error.toString());
+          }
+        }
+        jByteBuffer?.release();
+      });
     },
   ));
 }
@@ -331,11 +427,14 @@ class CronetClient extends BaseClient {
     _isClosed = true;
   }
 
-  HttpClientRequestProfile? _createProfile(BaseRequest request) =>
-      HttpClientRequestProfile.profile(
-          requestStartTime: DateTime.now(),
-          requestMethod: request.method,
-          requestUri: request.url.toString());
+  _HttpClientRequestProfileWithStreamResponse? _createProfile(BaseRequest request) {
+     var profile = HttpClientRequestProfile.profile(
+        requestStartTime: DateTime.now(),
+        requestMethod: request.method,
+        requestUri: request.url.toString());
+     return _HttpClientRequestProfileWithStreamResponse(profile);
+  }
+
 
   @override
   Future<StreamedResponse> send(BaseRequest request) async {
@@ -352,35 +451,36 @@ class CronetClient extends BaseClient {
           'HTTP request failed. CronetEngine is already closed.', request.url);
     }
 
-    final profile = _createProfile(request);
-    profile?.connectionInfo = {
+    final profileWithStreamedResponse = _createProfile(request);
+    profileWithStreamedResponse?.profile?.connectionInfo = {
       'package': 'package:cronet_http',
       'client': 'CronetHttp',
     };
-    profile?.requestData
+    profileWithStreamedResponse?.profile?.requestData
       ?..contentLength = request.contentLength
       ..followRedirects = request.followRedirects
       ..headersCommaValues = request.headers
       ..maxRedirects = request.maxRedirects;
-    if (profile != null && request.contentLength != null) {
-      profile.requestData.headersListValues = {
+    if (profileWithStreamedResponse?.profile != null && request.contentLength != null) {
+      profileWithStreamedResponse?.profile?.requestData.headersListValues = {
         'Content-Length': ['${request.contentLength}'],
-        ...profile.requestData.headers!
+        ...?profileWithStreamedResponse.profile?.requestData.headers!
       };
     }
 
     final stream = request.finalize();
     final body = await stream.toBytes();
-    profile?.requestData.bodySink.add(body);
+    profileWithStreamedResponse?.profile?.requestData.bodySink.add(body);
 
     final responseCompleter = Completer<StreamedResponse>();
 
     final builder = engine._engine.newUrlRequestBuilder(
       request.url.toString().toJString(),
       jb.UrlRequestCallbackProxy.new1(
-          _urlRequestCallbacks(request, responseCompleter, profile)),
+          _urlRequestCallbacks(request, responseCompleter, profileWithStreamedResponse)),
       _executor,
-    )..setHttpMethod(request.method.toJString());
+    )..setHttpMethod(request.method.toJString())
+    ..setRequestFinishedListener(jb.RequestFinishInfoListenerProxy.new1(_requestFinishedInfoListener(request, responseCompleter, profileWithStreamedResponse), _executor));
 
     var headers = request.headers;
     if (body.isNotEmpty &&
@@ -405,8 +505,11 @@ class CronetClientWithProfile extends CronetClient {
   HttpClientRequestProfile? profile;
 
   @override
-  HttpClientRequestProfile? _createProfile(BaseRequest request) =>
-      profile = super._createProfile(request);
+  _HttpClientRequestProfileWithStreamResponse? _createProfile(BaseRequest request) {
+    var profileWithStreamedResponse = super._createProfile(request);
+    profile = profileWithStreamedResponse?.profile;
+    return profileWithStreamedResponse;
+  }
 
   CronetClientWithProfile._(super._engine, super._closeEngine) : super._();
 

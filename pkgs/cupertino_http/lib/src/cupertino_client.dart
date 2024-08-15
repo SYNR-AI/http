@@ -195,7 +195,9 @@ class CupertinoClient extends BaseClient {
           ..responseStartMs =
               ((transactionMetrics.responseStartTime ?? 0) * 1000.0).toInt()
           ..responseEndMs =
-              ((transactionMetrics.responseEndTime ?? 0) * 1000.0).toInt();
+              ((transactionMetrics.responseEndTime ?? 0) * 1000.0).toInt()
+          ..totalTimeMs = (((metrics.taskInterval??0) <= 0.000001? ((transactionMetrics.responseEndTime??0) - (transactionMetrics.fetchStartTime??0)): metrics.taskInterval) * 1000).toInt()
+          ..isSocketReuse = transactionMetrics.reusedConnection??false;
         taskTracker.response?.metrics = httpMetrics;
         taskTracker.profile!.addEvent(HttpProfileRequestEvent(
             timestamp: DateTime.fromMillisecondsSinceEpoch(

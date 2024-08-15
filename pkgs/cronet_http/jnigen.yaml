@@ -11,13 +11,18 @@ output:
 
 classes:
   - 'io.flutter.plugins.cronet_http.UrlRequestCallbackProxy'
+  - 'io.flutter.plugins.cronet_http.RequestFinishInfoListenerProxy'
   - 'java.net.URL'
+  - 'java.util.Date'
   - 'java.util.concurrent.Executors'
   - 'org.chromium.net.CronetEngine'
   - 'org.chromium.net.CronetException'
   - 'org.chromium.net.UploadDataProviders'
   - 'org.chromium.net.UrlRequest'
+  - 'org.chromium.net.UrlRequest'
   - 'org.chromium.net.UrlResponseInfo'
+#  - 'org.chromium.net.UrlResponseInfo.Builder'
+  - 'org.chromium.net.RequestFinishedInfo'
 
 enable_experiment:
   - 'interface_implementation'

@@ -728,6 +728,315 @@ final class $UrlRequestCallbackProxyType
   }
 }
 
+/// from: io.flutter.plugins.cronet_http.RequestFinishInfoListenerProxy$RequestFinishInfoListenerInterface
+class RequestFinishInfoListenerProxy_RequestFinishInfoListenerInterface
+    extends jni.JObject {
+  @override
+  late final jni.JObjType<
+          RequestFinishInfoListenerProxy_RequestFinishInfoListenerInterface>
+      $type = type;
+
+  RequestFinishInfoListenerProxy_RequestFinishInfoListenerInterface.fromReference(
+    jni.JReference reference,
+  ) : super.fromReference(reference);
+
+  static final _class = jni.JClass.forName(
+      r'io/flutter/plugins/cronet_http/RequestFinishInfoListenerProxy$RequestFinishInfoListenerInterface');
+
+  /// The type which includes information such as the signature of this class.
+  static const type =
+      $RequestFinishInfoListenerProxy_RequestFinishInfoListenerInterfaceType();
+  static final _id_onRequestFinished = _class.instanceMethodId(
+    r'onRequestFinished',
+    r'(Lorg/chromium/net/RequestFinishedInfo;)V',
+  );
+
+  static final _onRequestFinished = ProtectedJniExtensions.lookup<
+              ffi.NativeFunction<
+                  jni.JThrowablePtr Function(
+                      ffi.Pointer<ffi.Void>,
+                      jni.JMethodIDPtr,
+                      ffi.VarArgs<(ffi.Pointer<ffi.Void>,)>)>>(
+          'globalEnv_CallVoidMethod')
+      .asFunction<
+          jni.JThrowablePtr Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr,
+              ffi.Pointer<ffi.Void>)>();
+
+  /// from: public abstract void onRequestFinished(org.chromium.net.RequestFinishedInfo requestFinishedInfo)
+  void onRequestFinished(
+    RequestFinishedInfo requestFinishedInfo,
+  ) {
+    _onRequestFinished(
+            reference.pointer,
+            _id_onRequestFinished as jni.JMethodIDPtr,
+            requestFinishedInfo.reference.pointer)
+        .check();
+  }
+
+  /// Maps a specific port to the implemented interface.
+  static final Map<int,
+          $RequestFinishInfoListenerProxy_RequestFinishInfoListenerInterfaceImpl>
+      _$impls = {};
+  ReceivePort? _$p;
+
+  static jni.JObjectPtr _$invoke(
+    int port,
+    jni.JObjectPtr descriptor,
+    jni.JObjectPtr args,
+  ) {
+    return _$invokeMethod(
+      port,
+      $MethodInvocation.fromAddresses(
+        0,
+        descriptor.address,
+        args.address,
+      ),
+    );
+  }
+
+  static final ffi.Pointer<
+          ffi.NativeFunction<
+              jni.JObjectPtr Function(
+                  ffi.Uint64, jni.JObjectPtr, jni.JObjectPtr)>>
+      _$invokePointer = ffi.Pointer.fromFunction(_$invoke);
+
+  static ffi.Pointer<ffi.Void> _$invokeMethod(
+    int $p,
+    $MethodInvocation $i,
+  ) {
+    try {
+      final $d = $i.methodDescriptor.toDartString(releaseOriginal: true);
+      final $a = $i.args;
+      if ($d == r'onRequestFinished(Lorg/chromium/net/RequestFinishedInfo;)V') {
+        _$impls[$p]!.onRequestFinished(
+          $a[0].castTo(const $RequestFinishedInfoType(), releaseOriginal: true),
+        );
+        return jni.nullptr;
+      }
+    } catch (e) {
+      return ProtectedJniExtensions.newDartException(e);
+    }
+    return jni.nullptr;
+  }
+
+  factory RequestFinishInfoListenerProxy_RequestFinishInfoListenerInterface.implement(
+    $RequestFinishInfoListenerProxy_RequestFinishInfoListenerInterfaceImpl
+        $impl,
+  ) {
+    final $p = ReceivePort();
+    final $x = RequestFinishInfoListenerProxy_RequestFinishInfoListenerInterface
+        .fromReference(
+      ProtectedJniExtensions.newPortProxy(
+        r'io.flutter.plugins.cronet_http.RequestFinishInfoListenerProxy$RequestFinishInfoListenerInterface',
+        $p,
+        _$invokePointer,
+      ),
+    ).._$p = $p;
+    final $a = $p.sendPort.nativePort;
+    _$impls[$a] = $impl;
+    $p.listen(($m) {
+      if ($m == null) {
+        _$impls.remove($p.sendPort.nativePort);
+        $p.close();
+        return;
+      }
+      final $i = $MethodInvocation.fromMessage($m as List<dynamic>);
+      final $r = _$invokeMethod($p.sendPort.nativePort, $i);
+      ProtectedJniExtensions.returnResult($i.result, $r);
+    });
+    return $x;
+  }
+}
+
+abstract interface class $RequestFinishInfoListenerProxy_RequestFinishInfoListenerInterfaceImpl {
+  factory $RequestFinishInfoListenerProxy_RequestFinishInfoListenerInterfaceImpl({
+    required void Function(RequestFinishedInfo requestFinishedInfo)
+        onRequestFinished,
+  }) = _$RequestFinishInfoListenerProxy_RequestFinishInfoListenerInterfaceImpl;
+
+  void onRequestFinished(RequestFinishedInfo requestFinishedInfo);
+}
+
+class _$RequestFinishInfoListenerProxy_RequestFinishInfoListenerInterfaceImpl
+    implements
+        $RequestFinishInfoListenerProxy_RequestFinishInfoListenerInterfaceImpl {
+  _$RequestFinishInfoListenerProxy_RequestFinishInfoListenerInterfaceImpl({
+    required void Function(RequestFinishedInfo requestFinishedInfo)
+        onRequestFinished,
+  }) : _onRequestFinished = onRequestFinished;
+
+  final void Function(RequestFinishedInfo requestFinishedInfo)
+      _onRequestFinished;
+
+  void onRequestFinished(RequestFinishedInfo requestFinishedInfo) {
+    return _onRequestFinished(requestFinishedInfo);
+  }
+}
+
+final class $RequestFinishInfoListenerProxy_RequestFinishInfoListenerInterfaceType
+    extends jni.JObjType<
+        RequestFinishInfoListenerProxy_RequestFinishInfoListenerInterface> {
+  const $RequestFinishInfoListenerProxy_RequestFinishInfoListenerInterfaceType();
+
+  @override
+  String get signature =>
+      r'Lio/flutter/plugins/cronet_http/RequestFinishInfoListenerProxy$RequestFinishInfoListenerInterface;';
+
+  @override
+  RequestFinishInfoListenerProxy_RequestFinishInfoListenerInterface
+      fromReference(jni.JReference reference) =>
+          RequestFinishInfoListenerProxy_RequestFinishInfoListenerInterface
+              .fromReference(reference);
+
+  @override
+  jni.JObjType get superType => const jni.JObjectType();
+
+  @override
+  final superCount = 1;
+
+  @override
+  int get hashCode =>
+      ($RequestFinishInfoListenerProxy_RequestFinishInfoListenerInterfaceType)
+          .hashCode;
+
+  @override
+  bool operator ==(Object other) {
+    return other.runtimeType ==
+            ($RequestFinishInfoListenerProxy_RequestFinishInfoListenerInterfaceType) &&
+        other
+            is $RequestFinishInfoListenerProxy_RequestFinishInfoListenerInterfaceType;
+  }
+}
+
+/// from: io.flutter.plugins.cronet_http.RequestFinishInfoListenerProxy
+class RequestFinishInfoListenerProxy extends RequestFinishedInfo_Listener {
+  @override
+  late final jni.JObjType<RequestFinishInfoListenerProxy> $type = type;
+
+  RequestFinishInfoListenerProxy.fromReference(
+    jni.JReference reference,
+  ) : super.fromReference(reference);
+
+  static final _class = jni.JClass.forName(
+      r'io/flutter/plugins/cronet_http/RequestFinishInfoListenerProxy');
+
+  /// The type which includes information such as the signature of this class.
+  static const type = $RequestFinishInfoListenerProxyType();
+  static final _id_new1 = _class.constructorId(
+    r'(Lio/flutter/plugins/cronet_http/RequestFinishInfoListenerProxy$RequestFinishInfoListenerInterface;Ljava/util/concurrent/Executor;)V',
+  );
+
+  static final _new1 = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(
+                  ffi.Pointer<ffi.Void>,
+                  jni.JMethodIDPtr,
+                  ffi.VarArgs<
+                      (
+                        ffi.Pointer<ffi.Void>,
+                        ffi.Pointer<ffi.Void>
+                      )>)>>('globalEnv_NewObject')
+      .asFunction<
+          jni.JniResult Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr,
+              ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>)>();
+
+  /// from: public void <init>(io.flutter.plugins.cronet_http.RequestFinishInfoListenerProxy$RequestFinishInfoListenerInterface requestFinishInfoListenerInterface, java.util.concurrent.Executor executor)
+  /// The returned object must be released after use, by calling the [release] method.
+  factory RequestFinishInfoListenerProxy.new1(
+    RequestFinishInfoListenerProxy_RequestFinishInfoListenerInterface
+        requestFinishInfoListenerInterface,
+    jni.JObject executor,
+  ) {
+    return RequestFinishInfoListenerProxy.fromReference(_new1(
+            _class.reference.pointer,
+            _id_new1 as jni.JMethodIDPtr,
+            requestFinishInfoListenerInterface.reference.pointer,
+            executor.reference.pointer)
+        .reference);
+  }
+
+  static final _id_getListener = _class.instanceMethodId(
+    r'getListener',
+    r'()Lio/flutter/plugins/cronet_http/RequestFinishInfoListenerProxy$RequestFinishInfoListenerInterface;',
+  );
+
+  static final _getListener = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(
+                ffi.Pointer<ffi.Void>,
+                jni.JMethodIDPtr,
+              )>>('globalEnv_CallObjectMethod')
+      .asFunction<
+          jni.JniResult Function(
+            ffi.Pointer<ffi.Void>,
+            jni.JMethodIDPtr,
+          )>();
+
+  /// from: public final io.flutter.plugins.cronet_http.RequestFinishInfoListenerProxy$RequestFinishInfoListenerInterface getListener()
+  /// The returned object must be released after use, by calling the [release] method.
+  RequestFinishInfoListenerProxy_RequestFinishInfoListenerInterface
+      getListener() {
+    return _getListener(reference.pointer, _id_getListener as jni.JMethodIDPtr)
+        .object(
+            const $RequestFinishInfoListenerProxy_RequestFinishInfoListenerInterfaceType());
+  }
+
+  static final _id_onRequestFinished = _class.instanceMethodId(
+    r'onRequestFinished',
+    r'(Lorg/chromium/net/RequestFinishedInfo;)V',
+  );
+
+  static final _onRequestFinished = ProtectedJniExtensions.lookup<
+              ffi.NativeFunction<
+                  jni.JThrowablePtr Function(
+                      ffi.Pointer<ffi.Void>,
+                      jni.JMethodIDPtr,
+                      ffi.VarArgs<(ffi.Pointer<ffi.Void>,)>)>>(
+          'globalEnv_CallVoidMethod')
+      .asFunction<
+          jni.JThrowablePtr Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr,
+              ffi.Pointer<ffi.Void>)>();
+
+  /// from: public void onRequestFinished(org.chromium.net.RequestFinishedInfo requestFinishedInfo)
+  void onRequestFinished(
+    RequestFinishedInfo requestFinishedInfo,
+  ) {
+    _onRequestFinished(
+            reference.pointer,
+            _id_onRequestFinished as jni.JMethodIDPtr,
+            requestFinishedInfo.reference.pointer)
+        .check();
+  }
+}
+
+final class $RequestFinishInfoListenerProxyType
+    extends jni.JObjType<RequestFinishInfoListenerProxy> {
+  const $RequestFinishInfoListenerProxyType();
+
+  @override
+  String get signature =>
+      r'Lio/flutter/plugins/cronet_http/RequestFinishInfoListenerProxy;';
+
+  @override
+  RequestFinishInfoListenerProxy fromReference(jni.JReference reference) =>
+      RequestFinishInfoListenerProxy.fromReference(reference);
+
+  @override
+  jni.JObjType get superType => const $RequestFinishedInfo_ListenerType();
+
+  @override
+  final superCount = 2;
+
+  @override
+  int get hashCode => ($RequestFinishInfoListenerProxyType).hashCode;
+
+  @override
+  bool operator ==(Object other) {
+    return other.runtimeType == ($RequestFinishInfoListenerProxyType) &&
+        other is $RequestFinishInfoListenerProxyType;
+  }
+}
+
 /// from: java.net.URL
 class URL extends jni.JObject {
   @override
@@ -1525,6 +1834,925 @@ final class $URLType extends jni.JObjType<URL> {
   @override
   bool operator ==(Object other) {
     return other.runtimeType == ($URLType) && other is $URLType;
+  }
+}
+
+/// from: java.util.Date
+class Date extends jni.JObject {
+  @override
+  late final jni.JObjType<Date> $type = type;
+
+  Date.fromReference(
+    jni.JReference reference,
+  ) : super.fromReference(reference);
+
+  static final _class = jni.JClass.forName(r'java/util/Date');
+
+  /// The type which includes information such as the signature of this class.
+  static const type = $DateType();
+  static final _id_new0 = _class.constructorId(
+    r'()V',
+  );
+
+  static final _new0 = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(
+                ffi.Pointer<ffi.Void>,
+                jni.JMethodIDPtr,
+              )>>('globalEnv_NewObject')
+      .asFunction<
+          jni.JniResult Function(
+            ffi.Pointer<ffi.Void>,
+            jni.JMethodIDPtr,
+          )>();
+
+  /// from: public void <init>()
+  /// The returned object must be released after use, by calling the [release] method.
+  factory Date() {
+    return Date.fromReference(
+        _new0(_class.reference.pointer, _id_new0 as jni.JMethodIDPtr)
+            .reference);
+  }
+
+  static final _id_new1 = _class.constructorId(
+    r'(J)V',
+  );
+
+  static final _new1 = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr,
+                  ffi.VarArgs<(ffi.Int64,)>)>>('globalEnv_NewObject')
+      .asFunction<
+          jni.JniResult Function(
+              ffi.Pointer<ffi.Void>, jni.JMethodIDPtr, int)>();
+
+  /// from: public void <init>(long j)
+  /// The returned object must be released after use, by calling the [release] method.
+  factory Date.new1(
+    int j,
+  ) {
+    return Date.fromReference(
+        _new1(_class.reference.pointer, _id_new1 as jni.JMethodIDPtr, j)
+            .reference);
+  }
+
+  static final _id_new2 = _class.constructorId(
+    r'(III)V',
+  );
+
+  static final _new2 = ProtectedJniExtensions.lookup<
+              ffi.NativeFunction<
+                  jni.JniResult Function(
+                      ffi.Pointer<ffi.Void>,
+                      jni.JMethodIDPtr,
+                      ffi.VarArgs<($Int32, $Int32, $Int32)>)>>(
+          'globalEnv_NewObject')
+      .asFunction<
+          jni.JniResult Function(
+              ffi.Pointer<ffi.Void>, jni.JMethodIDPtr, int, int, int)>();
+
+  /// from: public void <init>(int i, int i1, int i2)
+  /// The returned object must be released after use, by calling the [release] method.
+  factory Date.new2(
+    int i,
+    int i1,
+    int i2,
+  ) {
+    return Date.fromReference(
+        _new2(_class.reference.pointer, _id_new2 as jni.JMethodIDPtr, i, i1, i2)
+            .reference);
+  }
+
+  static final _id_new3 = _class.constructorId(
+    r'(IIIII)V',
+  );
+
+  static final _new3 = ProtectedJniExtensions.lookup<
+              ffi.NativeFunction<
+                  jni.JniResult Function(
+                      ffi.Pointer<ffi.Void>,
+                      jni.JMethodIDPtr,
+                      ffi.VarArgs<($Int32, $Int32, $Int32, $Int32, $Int32)>)>>(
+          'globalEnv_NewObject')
+      .asFunction<
+          jni.JniResult Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr, int,
+              int, int, int, int)>();
+
+  /// from: public void <init>(int i, int i1, int i2, int i3, int i4)
+  /// The returned object must be released after use, by calling the [release] method.
+  factory Date.new3(
+    int i,
+    int i1,
+    int i2,
+    int i3,
+    int i4,
+  ) {
+    return Date.fromReference(_new3(_class.reference.pointer,
+            _id_new3 as jni.JMethodIDPtr, i, i1, i2, i3, i4)
+        .reference);
+  }
+
+  static final _id_new4 = _class.constructorId(
+    r'(IIIIII)V',
+  );
+
+  static final _new4 = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(
+                  ffi.Pointer<ffi.Void>,
+                  jni.JMethodIDPtr,
+                  ffi.VarArgs<
+                      (
+                        $Int32,
+                        $Int32,
+                        $Int32,
+                        $Int32,
+                        $Int32,
+                        $Int32
+                      )>)>>('globalEnv_NewObject')
+      .asFunction<
+          jni.JniResult Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr, int,
+              int, int, int, int, int)>();
+
+  /// from: public void <init>(int i, int i1, int i2, int i3, int i4, int i5)
+  /// The returned object must be released after use, by calling the [release] method.
+  factory Date.new4(
+    int i,
+    int i1,
+    int i2,
+    int i3,
+    int i4,
+    int i5,
+  ) {
+    return Date.fromReference(_new4(_class.reference.pointer,
+            _id_new4 as jni.JMethodIDPtr, i, i1, i2, i3, i4, i5)
+        .reference);
+  }
+
+  static final _id_new5 = _class.constructorId(
+    r'(Ljava/lang/String;)V',
+  );
+
+  static final _new5 = ProtectedJniExtensions.lookup<
+              ffi.NativeFunction<
+                  jni.JniResult Function(
+                      ffi.Pointer<ffi.Void>,
+                      jni.JMethodIDPtr,
+                      ffi.VarArgs<(ffi.Pointer<ffi.Void>,)>)>>(
+          'globalEnv_NewObject')
+      .asFunction<
+          jni.JniResult Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr,
+              ffi.Pointer<ffi.Void>)>();
+
+  /// from: public void <init>(java.lang.String string)
+  /// The returned object must be released after use, by calling the [release] method.
+  factory Date.new5(
+    jni.JString string,
+  ) {
+    return Date.fromReference(_new5(_class.reference.pointer,
+            _id_new5 as jni.JMethodIDPtr, string.reference.pointer)
+        .reference);
+  }
+
+  static final _id_clone = _class.instanceMethodId(
+    r'clone',
+    r'()Ljava/lang/Object;',
+  );
+
+  static final _clone = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(
+                ffi.Pointer<ffi.Void>,
+                jni.JMethodIDPtr,
+              )>>('globalEnv_CallObjectMethod')
+      .asFunction<
+          jni.JniResult Function(
+            ffi.Pointer<ffi.Void>,
+            jni.JMethodIDPtr,
+          )>();
+
+  /// from: public java.lang.Object clone()
+  /// The returned object must be released after use, by calling the [release] method.
+  jni.JObject clone() {
+    return _clone(reference.pointer, _id_clone as jni.JMethodIDPtr)
+        .object(const jni.JObjectType());
+  }
+
+  static final _id_UTC = _class.staticMethodId(
+    r'UTC',
+    r'(IIIIII)J',
+  );
+
+  static final _UTC = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(
+                  ffi.Pointer<ffi.Void>,
+                  jni.JMethodIDPtr,
+                  ffi.VarArgs<
+                      (
+                        $Int32,
+                        $Int32,
+                        $Int32,
+                        $Int32,
+                        $Int32,
+                        $Int32
+                      )>)>>('globalEnv_CallStaticLongMethod')
+      .asFunction<
+          jni.JniResult Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr, int,
+              int, int, int, int, int)>();
+
+  /// from: static public long UTC(int i, int i1, int i2, int i3, int i4, int i5)
+  static int UTC(
+    int i,
+    int i1,
+    int i2,
+    int i3,
+    int i4,
+    int i5,
+  ) {
+    return _UTC(_class.reference.pointer, _id_UTC as jni.JMethodIDPtr, i, i1,
+            i2, i3, i4, i5)
+        .long;
+  }
+
+  static final _id_parse = _class.staticMethodId(
+    r'parse',
+    r'(Ljava/lang/String;)J',
+  );
+
+  static final _parse = ProtectedJniExtensions.lookup<
+              ffi.NativeFunction<
+                  jni.JniResult Function(
+                      ffi.Pointer<ffi.Void>,
+                      jni.JMethodIDPtr,
+                      ffi.VarArgs<(ffi.Pointer<ffi.Void>,)>)>>(
+          'globalEnv_CallStaticLongMethod')
+      .asFunction<
+          jni.JniResult Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr,
+              ffi.Pointer<ffi.Void>)>();
+
+  /// from: static public long parse(java.lang.String string)
+  static int parse(
+    jni.JString string,
+  ) {
+    return _parse(_class.reference.pointer, _id_parse as jni.JMethodIDPtr,
+            string.reference.pointer)
+        .long;
+  }
+
+  static final _id_getYear = _class.instanceMethodId(
+    r'getYear',
+    r'()I',
+  );
+
+  static final _getYear = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(
+                ffi.Pointer<ffi.Void>,
+                jni.JMethodIDPtr,
+              )>>('globalEnv_CallIntMethod')
+      .asFunction<
+          jni.JniResult Function(
+            ffi.Pointer<ffi.Void>,
+            jni.JMethodIDPtr,
+          )>();
+
+  /// from: public int getYear()
+  int getYear() {
+    return _getYear(reference.pointer, _id_getYear as jni.JMethodIDPtr).integer;
+  }
+
+  static final _id_setYear = _class.instanceMethodId(
+    r'setYear',
+    r'(I)V',
+  );
+
+  static final _setYear = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JThrowablePtr Function(
+                  ffi.Pointer<ffi.Void>,
+                  jni.JMethodIDPtr,
+                  ffi.VarArgs<($Int32,)>)>>('globalEnv_CallVoidMethod')
+      .asFunction<
+          jni.JThrowablePtr Function(
+              ffi.Pointer<ffi.Void>, jni.JMethodIDPtr, int)>();
+
+  /// from: public void setYear(int i)
+  void setYear(
+    int i,
+  ) {
+    _setYear(reference.pointer, _id_setYear as jni.JMethodIDPtr, i).check();
+  }
+
+  static final _id_getMonth = _class.instanceMethodId(
+    r'getMonth',
+    r'()I',
+  );
+
+  static final _getMonth = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(
+                ffi.Pointer<ffi.Void>,
+                jni.JMethodIDPtr,
+              )>>('globalEnv_CallIntMethod')
+      .asFunction<
+          jni.JniResult Function(
+            ffi.Pointer<ffi.Void>,
+            jni.JMethodIDPtr,
+          )>();
+
+  /// from: public int getMonth()
+  int getMonth() {
+    return _getMonth(reference.pointer, _id_getMonth as jni.JMethodIDPtr)
+        .integer;
+  }
+
+  static final _id_setMonth = _class.instanceMethodId(
+    r'setMonth',
+    r'(I)V',
+  );
+
+  static final _setMonth = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JThrowablePtr Function(
+                  ffi.Pointer<ffi.Void>,
+                  jni.JMethodIDPtr,
+                  ffi.VarArgs<($Int32,)>)>>('globalEnv_CallVoidMethod')
+      .asFunction<
+          jni.JThrowablePtr Function(
+              ffi.Pointer<ffi.Void>, jni.JMethodIDPtr, int)>();
+
+  /// from: public void setMonth(int i)
+  void setMonth(
+    int i,
+  ) {
+    _setMonth(reference.pointer, _id_setMonth as jni.JMethodIDPtr, i).check();
+  }
+
+  static final _id_getDate = _class.instanceMethodId(
+    r'getDate',
+    r'()I',
+  );
+
+  static final _getDate = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(
+                ffi.Pointer<ffi.Void>,
+                jni.JMethodIDPtr,
+              )>>('globalEnv_CallIntMethod')
+      .asFunction<
+          jni.JniResult Function(
+            ffi.Pointer<ffi.Void>,
+            jni.JMethodIDPtr,
+          )>();
+
+  /// from: public int getDate()
+  int getDate() {
+    return _getDate(reference.pointer, _id_getDate as jni.JMethodIDPtr).integer;
+  }
+
+  static final _id_setDate = _class.instanceMethodId(
+    r'setDate',
+    r'(I)V',
+  );
+
+  static final _setDate = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JThrowablePtr Function(
+                  ffi.Pointer<ffi.Void>,
+                  jni.JMethodIDPtr,
+                  ffi.VarArgs<($Int32,)>)>>('globalEnv_CallVoidMethod')
+      .asFunction<
+          jni.JThrowablePtr Function(
+              ffi.Pointer<ffi.Void>, jni.JMethodIDPtr, int)>();
+
+  /// from: public void setDate(int i)
+  void setDate(
+    int i,
+  ) {
+    _setDate(reference.pointer, _id_setDate as jni.JMethodIDPtr, i).check();
+  }
+
+  static final _id_getDay = _class.instanceMethodId(
+    r'getDay',
+    r'()I',
+  );
+
+  static final _getDay = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(
+                ffi.Pointer<ffi.Void>,
+                jni.JMethodIDPtr,
+              )>>('globalEnv_CallIntMethod')
+      .asFunction<
+          jni.JniResult Function(
+            ffi.Pointer<ffi.Void>,
+            jni.JMethodIDPtr,
+          )>();
+
+  /// from: public int getDay()
+  int getDay() {
+    return _getDay(reference.pointer, _id_getDay as jni.JMethodIDPtr).integer;
+  }
+
+  static final _id_getHours = _class.instanceMethodId(
+    r'getHours',
+    r'()I',
+  );
+
+  static final _getHours = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(
+                ffi.Pointer<ffi.Void>,
+                jni.JMethodIDPtr,
+              )>>('globalEnv_CallIntMethod')
+      .asFunction<
+          jni.JniResult Function(
+            ffi.Pointer<ffi.Void>,
+            jni.JMethodIDPtr,
+          )>();
+
+  /// from: public int getHours()
+  int getHours() {
+    return _getHours(reference.pointer, _id_getHours as jni.JMethodIDPtr)
+        .integer;
+  }
+
+  static final _id_setHours = _class.instanceMethodId(
+    r'setHours',
+    r'(I)V',
+  );
+
+  static final _setHours = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JThrowablePtr Function(
+                  ffi.Pointer<ffi.Void>,
+                  jni.JMethodIDPtr,
+                  ffi.VarArgs<($Int32,)>)>>('globalEnv_CallVoidMethod')
+      .asFunction<
+          jni.JThrowablePtr Function(
+              ffi.Pointer<ffi.Void>, jni.JMethodIDPtr, int)>();
+
+  /// from: public void setHours(int i)
+  void setHours(
+    int i,
+  ) {
+    _setHours(reference.pointer, _id_setHours as jni.JMethodIDPtr, i).check();
+  }
+
+  static final _id_getMinutes = _class.instanceMethodId(
+    r'getMinutes',
+    r'()I',
+  );
+
+  static final _getMinutes = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(
+                ffi.Pointer<ffi.Void>,
+                jni.JMethodIDPtr,
+              )>>('globalEnv_CallIntMethod')
+      .asFunction<
+          jni.JniResult Function(
+            ffi.Pointer<ffi.Void>,
+            jni.JMethodIDPtr,
+          )>();
+
+  /// from: public int getMinutes()
+  int getMinutes() {
+    return _getMinutes(reference.pointer, _id_getMinutes as jni.JMethodIDPtr)
+        .integer;
+  }
+
+  static final _id_setMinutes = _class.instanceMethodId(
+    r'setMinutes',
+    r'(I)V',
+  );
+
+  static final _setMinutes = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JThrowablePtr Function(
+                  ffi.Pointer<ffi.Void>,
+                  jni.JMethodIDPtr,
+                  ffi.VarArgs<($Int32,)>)>>('globalEnv_CallVoidMethod')
+      .asFunction<
+          jni.JThrowablePtr Function(
+              ffi.Pointer<ffi.Void>, jni.JMethodIDPtr, int)>();
+
+  /// from: public void setMinutes(int i)
+  void setMinutes(
+    int i,
+  ) {
+    _setMinutes(reference.pointer, _id_setMinutes as jni.JMethodIDPtr, i)
+        .check();
+  }
+
+  static final _id_getSeconds = _class.instanceMethodId(
+    r'getSeconds',
+    r'()I',
+  );
+
+  static final _getSeconds = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(
+                ffi.Pointer<ffi.Void>,
+                jni.JMethodIDPtr,
+              )>>('globalEnv_CallIntMethod')
+      .asFunction<
+          jni.JniResult Function(
+            ffi.Pointer<ffi.Void>,
+            jni.JMethodIDPtr,
+          )>();
+
+  /// from: public int getSeconds()
+  int getSeconds() {
+    return _getSeconds(reference.pointer, _id_getSeconds as jni.JMethodIDPtr)
+        .integer;
+  }
+
+  static final _id_setSeconds = _class.instanceMethodId(
+    r'setSeconds',
+    r'(I)V',
+  );
+
+  static final _setSeconds = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JThrowablePtr Function(
+                  ffi.Pointer<ffi.Void>,
+                  jni.JMethodIDPtr,
+                  ffi.VarArgs<($Int32,)>)>>('globalEnv_CallVoidMethod')
+      .asFunction<
+          jni.JThrowablePtr Function(
+              ffi.Pointer<ffi.Void>, jni.JMethodIDPtr, int)>();
+
+  /// from: public void setSeconds(int i)
+  void setSeconds(
+    int i,
+  ) {
+    _setSeconds(reference.pointer, _id_setSeconds as jni.JMethodIDPtr, i)
+        .check();
+  }
+
+  static final _id_getTime = _class.instanceMethodId(
+    r'getTime',
+    r'()J',
+  );
+
+  static final _getTime = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(
+                ffi.Pointer<ffi.Void>,
+                jni.JMethodIDPtr,
+              )>>('globalEnv_CallLongMethod')
+      .asFunction<
+          jni.JniResult Function(
+            ffi.Pointer<ffi.Void>,
+            jni.JMethodIDPtr,
+          )>();
+
+  /// from: public long getTime()
+  int getTime() {
+    return _getTime(reference.pointer, _id_getTime as jni.JMethodIDPtr).long;
+  }
+
+  static final _id_setTime = _class.instanceMethodId(
+    r'setTime',
+    r'(J)V',
+  );
+
+  static final _setTime = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JThrowablePtr Function(
+                  ffi.Pointer<ffi.Void>,
+                  jni.JMethodIDPtr,
+                  ffi.VarArgs<(ffi.Int64,)>)>>('globalEnv_CallVoidMethod')
+      .asFunction<
+          jni.JThrowablePtr Function(
+              ffi.Pointer<ffi.Void>, jni.JMethodIDPtr, int)>();
+
+  /// from: public void setTime(long j)
+  void setTime(
+    int j,
+  ) {
+    _setTime(reference.pointer, _id_setTime as jni.JMethodIDPtr, j).check();
+  }
+
+  static final _id_before = _class.instanceMethodId(
+    r'before',
+    r'(Ljava/util/Date;)Z',
+  );
+
+  static final _before = ProtectedJniExtensions.lookup<
+              ffi.NativeFunction<
+                  jni.JniResult Function(
+                      ffi.Pointer<ffi.Void>,
+                      jni.JMethodIDPtr,
+                      ffi.VarArgs<(ffi.Pointer<ffi.Void>,)>)>>(
+          'globalEnv_CallBooleanMethod')
+      .asFunction<
+          jni.JniResult Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr,
+              ffi.Pointer<ffi.Void>)>();
+
+  /// from: public boolean before(java.util.Date date)
+  bool before(
+    Date date,
+  ) {
+    return _before(reference.pointer, _id_before as jni.JMethodIDPtr,
+            date.reference.pointer)
+        .boolean;
+  }
+
+  static final _id_after = _class.instanceMethodId(
+    r'after',
+    r'(Ljava/util/Date;)Z',
+  );
+
+  static final _after = ProtectedJniExtensions.lookup<
+              ffi.NativeFunction<
+                  jni.JniResult Function(
+                      ffi.Pointer<ffi.Void>,
+                      jni.JMethodIDPtr,
+                      ffi.VarArgs<(ffi.Pointer<ffi.Void>,)>)>>(
+          'globalEnv_CallBooleanMethod')
+      .asFunction<
+          jni.JniResult Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr,
+              ffi.Pointer<ffi.Void>)>();
+
+  /// from: public boolean after(java.util.Date date)
+  bool after(
+    Date date,
+  ) {
+    return _after(reference.pointer, _id_after as jni.JMethodIDPtr,
+            date.reference.pointer)
+        .boolean;
+  }
+
+  static final _id_equals = _class.instanceMethodId(
+    r'equals',
+    r'(Ljava/lang/Object;)Z',
+  );
+
+  static final _equals = ProtectedJniExtensions.lookup<
+              ffi.NativeFunction<
+                  jni.JniResult Function(
+                      ffi.Pointer<ffi.Void>,
+                      jni.JMethodIDPtr,
+                      ffi.VarArgs<(ffi.Pointer<ffi.Void>,)>)>>(
+          'globalEnv_CallBooleanMethod')
+      .asFunction<
+          jni.JniResult Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr,
+              ffi.Pointer<ffi.Void>)>();
+
+  /// from: public boolean equals(java.lang.Object object)
+  bool equals(
+    jni.JObject object,
+  ) {
+    return _equals(reference.pointer, _id_equals as jni.JMethodIDPtr,
+            object.reference.pointer)
+        .boolean;
+  }
+
+  static final _id_compareTo = _class.instanceMethodId(
+    r'compareTo',
+    r'(Ljava/util/Date;)I',
+  );
+
+  static final _compareTo = ProtectedJniExtensions.lookup<
+              ffi.NativeFunction<
+                  jni.JniResult Function(
+                      ffi.Pointer<ffi.Void>,
+                      jni.JMethodIDPtr,
+                      ffi.VarArgs<(ffi.Pointer<ffi.Void>,)>)>>(
+          'globalEnv_CallIntMethod')
+      .asFunction<
+          jni.JniResult Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr,
+              ffi.Pointer<ffi.Void>)>();
+
+  /// from: public int compareTo(java.util.Date date)
+  int compareTo(
+    Date date,
+  ) {
+    return _compareTo(reference.pointer, _id_compareTo as jni.JMethodIDPtr,
+            date.reference.pointer)
+        .integer;
+  }
+
+  static final _id_hashCode1 = _class.instanceMethodId(
+    r'hashCode',
+    r'()I',
+  );
+
+  static final _hashCode1 = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(
+                ffi.Pointer<ffi.Void>,
+                jni.JMethodIDPtr,
+              )>>('globalEnv_CallIntMethod')
+      .asFunction<
+          jni.JniResult Function(
+            ffi.Pointer<ffi.Void>,
+            jni.JMethodIDPtr,
+          )>();
+
+  /// from: public int hashCode()
+  int hashCode1() {
+    return _hashCode1(reference.pointer, _id_hashCode1 as jni.JMethodIDPtr)
+        .integer;
+  }
+
+  static final _id_toString1 = _class.instanceMethodId(
+    r'toString',
+    r'()Ljava/lang/String;',
+  );
+
+  static final _toString1 = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(
+                ffi.Pointer<ffi.Void>,
+                jni.JMethodIDPtr,
+              )>>('globalEnv_CallObjectMethod')
+      .asFunction<
+          jni.JniResult Function(
+            ffi.Pointer<ffi.Void>,
+            jni.JMethodIDPtr,
+          )>();
+
+  /// from: public java.lang.String toString()
+  /// The returned object must be released after use, by calling the [release] method.
+  jni.JString toString1() {
+    return _toString1(reference.pointer, _id_toString1 as jni.JMethodIDPtr)
+        .object(const jni.JStringType());
+  }
+
+  static final _id_toLocaleString = _class.instanceMethodId(
+    r'toLocaleString',
+    r'()Ljava/lang/String;',
+  );
+
+  static final _toLocaleString = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(
+                ffi.Pointer<ffi.Void>,
+                jni.JMethodIDPtr,
+              )>>('globalEnv_CallObjectMethod')
+      .asFunction<
+          jni.JniResult Function(
+            ffi.Pointer<ffi.Void>,
+            jni.JMethodIDPtr,
+          )>();
+
+  /// from: public java.lang.String toLocaleString()
+  /// The returned object must be released after use, by calling the [release] method.
+  jni.JString toLocaleString() {
+    return _toLocaleString(
+            reference.pointer, _id_toLocaleString as jni.JMethodIDPtr)
+        .object(const jni.JStringType());
+  }
+
+  static final _id_toGMTString = _class.instanceMethodId(
+    r'toGMTString',
+    r'()Ljava/lang/String;',
+  );
+
+  static final _toGMTString = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(
+                ffi.Pointer<ffi.Void>,
+                jni.JMethodIDPtr,
+              )>>('globalEnv_CallObjectMethod')
+      .asFunction<
+          jni.JniResult Function(
+            ffi.Pointer<ffi.Void>,
+            jni.JMethodIDPtr,
+          )>();
+
+  /// from: public java.lang.String toGMTString()
+  /// The returned object must be released after use, by calling the [release] method.
+  jni.JString toGMTString() {
+    return _toGMTString(reference.pointer, _id_toGMTString as jni.JMethodIDPtr)
+        .object(const jni.JStringType());
+  }
+
+  static final _id_getTimezoneOffset = _class.instanceMethodId(
+    r'getTimezoneOffset',
+    r'()I',
+  );
+
+  static final _getTimezoneOffset = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(
+                ffi.Pointer<ffi.Void>,
+                jni.JMethodIDPtr,
+              )>>('globalEnv_CallIntMethod')
+      .asFunction<
+          jni.JniResult Function(
+            ffi.Pointer<ffi.Void>,
+            jni.JMethodIDPtr,
+          )>();
+
+  /// from: public int getTimezoneOffset()
+  int getTimezoneOffset() {
+    return _getTimezoneOffset(
+            reference.pointer, _id_getTimezoneOffset as jni.JMethodIDPtr)
+        .integer;
+  }
+
+  static final _id_from = _class.staticMethodId(
+    r'from',
+    r'(Ljava/time/Instant;)Ljava/util/Date;',
+  );
+
+  static final _from = ProtectedJniExtensions.lookup<
+              ffi.NativeFunction<
+                  jni.JniResult Function(
+                      ffi.Pointer<ffi.Void>,
+                      jni.JMethodIDPtr,
+                      ffi.VarArgs<(ffi.Pointer<ffi.Void>,)>)>>(
+          'globalEnv_CallStaticObjectMethod')
+      .asFunction<
+          jni.JniResult Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr,
+              ffi.Pointer<ffi.Void>)>();
+
+  /// from: static public java.util.Date from(java.time.Instant instant)
+  /// The returned object must be released after use, by calling the [release] method.
+  static Date from(
+    jni.JObject instant,
+  ) {
+    return _from(_class.reference.pointer, _id_from as jni.JMethodIDPtr,
+            instant.reference.pointer)
+        .object(const $DateType());
+  }
+
+  static final _id_toInstant = _class.instanceMethodId(
+    r'toInstant',
+    r'()Ljava/time/Instant;',
+  );
+
+  static final _toInstant = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(
+                ffi.Pointer<ffi.Void>,
+                jni.JMethodIDPtr,
+              )>>('globalEnv_CallObjectMethod')
+      .asFunction<
+          jni.JniResult Function(
+            ffi.Pointer<ffi.Void>,
+            jni.JMethodIDPtr,
+          )>();
+
+  /// from: public java.time.Instant toInstant()
+  /// The returned object must be released after use, by calling the [release] method.
+  jni.JObject toInstant() {
+    return _toInstant(reference.pointer, _id_toInstant as jni.JMethodIDPtr)
+        .object(const jni.JObjectType());
+  }
+
+  static final _id_compareTo1 = _class.instanceMethodId(
+    r'compareTo',
+    r'(Ljava/lang/Object;)I',
+  );
+
+  static final _compareTo1 = ProtectedJniExtensions.lookup<
+              ffi.NativeFunction<
+                  jni.JniResult Function(
+                      ffi.Pointer<ffi.Void>,
+                      jni.JMethodIDPtr,
+                      ffi.VarArgs<(ffi.Pointer<ffi.Void>,)>)>>(
+          'globalEnv_CallIntMethod')
+      .asFunction<
+          jni.JniResult Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr,
+              ffi.Pointer<ffi.Void>)>();
+
+  /// from: public int compareTo(java.lang.Object object)
+  int compareTo1(
+    jni.JObject object,
+  ) {
+    return _compareTo1(reference.pointer, _id_compareTo1 as jni.JMethodIDPtr,
+            object.reference.pointer)
+        .integer;
+  }
+}
+
+final class $DateType extends jni.JObjType<Date> {
+  const $DateType();
+
+  @override
+  String get signature => r'Ljava/util/Date;';
+
+  @override
+  Date fromReference(jni.JReference reference) => Date.fromReference(reference);
+
+  @override
+  jni.JObjType get superType => const jni.JObjectType();
+
+  @override
+  final superCount = 1;
+
+  @override
+  int get hashCode => ($DateType).hashCode;
+
+  @override
+  bool operator ==(Object other) {
+    return other.runtimeType == ($DateType) && other is $DateType;
   }
 }
 
@@ -2628,7 +3856,7 @@ class CronetEngine_Builder extends jni.JObject {
     jni.JString string,
     jni.JSet<jni.JArray<jni.jbyte>> set0,
     bool z,
-    jni.JObject date,
+    Date date,
   ) {
     return _addPublicKeyPins(
             reference.pointer,
@@ -2667,6 +3895,214 @@ class CronetEngine_Builder extends jni.JObject {
             _id_enablePublicKeyPinningBypassForLocalTrustAnchors
                 as jni.JMethodIDPtr,
             z ? 1 : 0)
+        .object(const $CronetEngine_BuilderType());
+  }
+
+  static final _id_setThreadPriority = _class.instanceMethodId(
+    r'setThreadPriority',
+    r'(I)Lorg/chromium/net/CronetEngine$Builder;',
+  );
+
+  static final _setThreadPriority = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr,
+                  ffi.VarArgs<($Int32,)>)>>('globalEnv_CallObjectMethod')
+      .asFunction<
+          jni.JniResult Function(
+              ffi.Pointer<ffi.Void>, jni.JMethodIDPtr, int)>();
+
+  /// from: public org.chromium.net.CronetEngine$Builder setThreadPriority(int i)
+  /// The returned object must be released after use, by calling the [release] method.
+  CronetEngine_Builder setThreadPriority(
+    int i,
+  ) {
+    return _setThreadPriority(
+            reference.pointer, _id_setThreadPriority as jni.JMethodIDPtr, i)
+        .object(const $CronetEngine_BuilderType());
+  }
+
+  static final _id_enableNetworkQualityEstimator = _class.instanceMethodId(
+    r'enableNetworkQualityEstimator',
+    r'(Z)Lorg/chromium/net/CronetEngine$Builder;',
+  );
+
+  static final _enableNetworkQualityEstimator = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr,
+                  ffi.VarArgs<($Int32,)>)>>('globalEnv_CallObjectMethod')
+      .asFunction<
+          jni.JniResult Function(
+              ffi.Pointer<ffi.Void>, jni.JMethodIDPtr, int)>();
+
+  /// from: public org.chromium.net.CronetEngine$Builder enableNetworkQualityEstimator(boolean z)
+  /// The returned object must be released after use, by calling the [release] method.
+  CronetEngine_Builder enableNetworkQualityEstimator(
+    bool z,
+  ) {
+    return _enableNetworkQualityEstimator(reference.pointer,
+            _id_enableNetworkQualityEstimator as jni.JMethodIDPtr, z ? 1 : 0)
+        .object(const $CronetEngine_BuilderType());
+  }
+
+  static final _id_setQuicOptions = _class.instanceMethodId(
+    r'setQuicOptions',
+    r'(Lorg/chromium/net/QuicOptions;)Lorg/chromium/net/CronetEngine$Builder;',
+  );
+
+  static final _setQuicOptions = ProtectedJniExtensions.lookup<
+              ffi.NativeFunction<
+                  jni.JniResult Function(
+                      ffi.Pointer<ffi.Void>,
+                      jni.JMethodIDPtr,
+                      ffi.VarArgs<(ffi.Pointer<ffi.Void>,)>)>>(
+          'globalEnv_CallObjectMethod')
+      .asFunction<
+          jni.JniResult Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr,
+              ffi.Pointer<ffi.Void>)>();
+
+  /// from: public org.chromium.net.CronetEngine$Builder setQuicOptions(org.chromium.net.QuicOptions quicOptions)
+  /// The returned object must be released after use, by calling the [release] method.
+  CronetEngine_Builder setQuicOptions(
+    jni.JObject quicOptions,
+  ) {
+    return _setQuicOptions(
+            reference.pointer,
+            _id_setQuicOptions as jni.JMethodIDPtr,
+            quicOptions.reference.pointer)
+        .object(const $CronetEngine_BuilderType());
+  }
+
+  static final _id_setQuicOptions1 = _class.instanceMethodId(
+    r'setQuicOptions',
+    r'(Lorg/chromium/net/QuicOptions$Builder;)Lorg/chromium/net/CronetEngine$Builder;',
+  );
+
+  static final _setQuicOptions1 = ProtectedJniExtensions.lookup<
+              ffi.NativeFunction<
+                  jni.JniResult Function(
+                      ffi.Pointer<ffi.Void>,
+                      jni.JMethodIDPtr,
+                      ffi.VarArgs<(ffi.Pointer<ffi.Void>,)>)>>(
+          'globalEnv_CallObjectMethod')
+      .asFunction<
+          jni.JniResult Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr,
+              ffi.Pointer<ffi.Void>)>();
+
+  /// from: public org.chromium.net.CronetEngine$Builder setQuicOptions(org.chromium.net.QuicOptions$Builder builder)
+  /// The returned object must be released after use, by calling the [release] method.
+  CronetEngine_Builder setQuicOptions1(
+    jni.JObject builder,
+  ) {
+    return _setQuicOptions1(reference.pointer,
+            _id_setQuicOptions1 as jni.JMethodIDPtr, builder.reference.pointer)
+        .object(const $CronetEngine_BuilderType());
+  }
+
+  static final _id_setDnsOptions = _class.instanceMethodId(
+    r'setDnsOptions',
+    r'(Lorg/chromium/net/DnsOptions;)Lorg/chromium/net/CronetEngine$Builder;',
+  );
+
+  static final _setDnsOptions = ProtectedJniExtensions.lookup<
+              ffi.NativeFunction<
+                  jni.JniResult Function(
+                      ffi.Pointer<ffi.Void>,
+                      jni.JMethodIDPtr,
+                      ffi.VarArgs<(ffi.Pointer<ffi.Void>,)>)>>(
+          'globalEnv_CallObjectMethod')
+      .asFunction<
+          jni.JniResult Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr,
+              ffi.Pointer<ffi.Void>)>();
+
+  /// from: public org.chromium.net.CronetEngine$Builder setDnsOptions(org.chromium.net.DnsOptions dnsOptions)
+  /// The returned object must be released after use, by calling the [release] method.
+  CronetEngine_Builder setDnsOptions(
+    jni.JObject dnsOptions,
+  ) {
+    return _setDnsOptions(reference.pointer,
+            _id_setDnsOptions as jni.JMethodIDPtr, dnsOptions.reference.pointer)
+        .object(const $CronetEngine_BuilderType());
+  }
+
+  static final _id_setDnsOptions1 = _class.instanceMethodId(
+    r'setDnsOptions',
+    r'(Lorg/chromium/net/DnsOptions$Builder;)Lorg/chromium/net/CronetEngine$Builder;',
+  );
+
+  static final _setDnsOptions1 = ProtectedJniExtensions.lookup<
+              ffi.NativeFunction<
+                  jni.JniResult Function(
+                      ffi.Pointer<ffi.Void>,
+                      jni.JMethodIDPtr,
+                      ffi.VarArgs<(ffi.Pointer<ffi.Void>,)>)>>(
+          'globalEnv_CallObjectMethod')
+      .asFunction<
+          jni.JniResult Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr,
+              ffi.Pointer<ffi.Void>)>();
+
+  /// from: public org.chromium.net.CronetEngine$Builder setDnsOptions(org.chromium.net.DnsOptions$Builder builder)
+  /// The returned object must be released after use, by calling the [release] method.
+  CronetEngine_Builder setDnsOptions1(
+    jni.JObject builder,
+  ) {
+    return _setDnsOptions1(reference.pointer,
+            _id_setDnsOptions1 as jni.JMethodIDPtr, builder.reference.pointer)
+        .object(const $CronetEngine_BuilderType());
+  }
+
+  static final _id_setConnectionMigrationOptions = _class.instanceMethodId(
+    r'setConnectionMigrationOptions',
+    r'(Lorg/chromium/net/ConnectionMigrationOptions;)Lorg/chromium/net/CronetEngine$Builder;',
+  );
+
+  static final _setConnectionMigrationOptions = ProtectedJniExtensions.lookup<
+              ffi.NativeFunction<
+                  jni.JniResult Function(
+                      ffi.Pointer<ffi.Void>,
+                      jni.JMethodIDPtr,
+                      ffi.VarArgs<(ffi.Pointer<ffi.Void>,)>)>>(
+          'globalEnv_CallObjectMethod')
+      .asFunction<
+          jni.JniResult Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr,
+              ffi.Pointer<ffi.Void>)>();
+
+  /// from: public org.chromium.net.CronetEngine$Builder setConnectionMigrationOptions(org.chromium.net.ConnectionMigrationOptions connectionMigrationOptions)
+  /// The returned object must be released after use, by calling the [release] method.
+  CronetEngine_Builder setConnectionMigrationOptions(
+    jni.JObject connectionMigrationOptions,
+  ) {
+    return _setConnectionMigrationOptions(
+            reference.pointer,
+            _id_setConnectionMigrationOptions as jni.JMethodIDPtr,
+            connectionMigrationOptions.reference.pointer)
+        .object(const $CronetEngine_BuilderType());
+  }
+
+  static final _id_setConnectionMigrationOptions1 = _class.instanceMethodId(
+    r'setConnectionMigrationOptions',
+    r'(Lorg/chromium/net/ConnectionMigrationOptions$Builder;)Lorg/chromium/net/CronetEngine$Builder;',
+  );
+
+  static final _setConnectionMigrationOptions1 = ProtectedJniExtensions.lookup<
+              ffi.NativeFunction<
+                  jni.JniResult Function(
+                      ffi.Pointer<ffi.Void>,
+                      jni.JMethodIDPtr,
+                      ffi.VarArgs<(ffi.Pointer<ffi.Void>,)>)>>(
+          'globalEnv_CallObjectMethod')
+      .asFunction<
+          jni.JniResult Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr,
+              ffi.Pointer<ffi.Void>)>();
+
+  /// from: public org.chromium.net.CronetEngine$Builder setConnectionMigrationOptions(org.chromium.net.ConnectionMigrationOptions$Builder builder)
+  /// The returned object must be released after use, by calling the [release] method.
+  CronetEngine_Builder setConnectionMigrationOptions1(
+    jni.JObject builder,
+  ) {
+    return _setConnectionMigrationOptions1(
+            reference.pointer,
+            _id_setConnectionMigrationOptions1 as jni.JMethodIDPtr,
+            builder.reference.pointer)
         .object(const $CronetEngine_BuilderType());
   }
 
@@ -2735,6 +4171,30 @@ class CronetEngine extends jni.JObject {
 
   /// The type which includes information such as the signature of this class.
   static const type = $CronetEngineType();
+
+  /// from: static public final int ACTIVE_REQUEST_COUNT_UNKNOWN
+  static const ACTIVE_REQUEST_COUNT_UNKNOWN = -1;
+
+  /// from: static public final int CONNECTION_METRIC_UNKNOWN
+  static const CONNECTION_METRIC_UNKNOWN = -1;
+
+  /// from: static public final int EFFECTIVE_CONNECTION_TYPE_UNKNOWN
+  static const EFFECTIVE_CONNECTION_TYPE_UNKNOWN = 0;
+
+  /// from: static public final int EFFECTIVE_CONNECTION_TYPE_OFFLINE
+  static const EFFECTIVE_CONNECTION_TYPE_OFFLINE = 1;
+
+  /// from: static public final int EFFECTIVE_CONNECTION_TYPE_SLOW_2G
+  static const EFFECTIVE_CONNECTION_TYPE_SLOW_2G = 2;
+
+  /// from: static public final int EFFECTIVE_CONNECTION_TYPE_2G
+  static const EFFECTIVE_CONNECTION_TYPE_2G = 3;
+
+  /// from: static public final int EFFECTIVE_CONNECTION_TYPE_3G
+  static const EFFECTIVE_CONNECTION_TYPE_3G = 4;
+
+  /// from: static public final int EFFECTIVE_CONNECTION_TYPE_4G
+  static const EFFECTIVE_CONNECTION_TYPE_4G = 5;
   static final _id_new0 = _class.constructorId(
     r'()V',
   );
@@ -2971,6 +4431,350 @@ class CronetEngine extends jni.JObject {
             callback.reference.pointer,
             executor.reference.pointer)
         .object(const $UrlRequest_BuilderType());
+  }
+
+  static final _id_getActiveRequestCount = _class.instanceMethodId(
+    r'getActiveRequestCount',
+    r'()I',
+  );
+
+  static final _getActiveRequestCount = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(
+                ffi.Pointer<ffi.Void>,
+                jni.JMethodIDPtr,
+              )>>('globalEnv_CallIntMethod')
+      .asFunction<
+          jni.JniResult Function(
+            ffi.Pointer<ffi.Void>,
+            jni.JMethodIDPtr,
+          )>();
+
+  /// from: public int getActiveRequestCount()
+  int getActiveRequestCount() {
+    return _getActiveRequestCount(
+            reference.pointer, _id_getActiveRequestCount as jni.JMethodIDPtr)
+        .integer;
+  }
+
+  static final _id_addRequestFinishedListener = _class.instanceMethodId(
+    r'addRequestFinishedListener',
+    r'(Lorg/chromium/net/RequestFinishedInfo$Listener;)V',
+  );
+
+  static final _addRequestFinishedListener = ProtectedJniExtensions.lookup<
+              ffi.NativeFunction<
+                  jni.JThrowablePtr Function(
+                      ffi.Pointer<ffi.Void>,
+                      jni.JMethodIDPtr,
+                      ffi.VarArgs<(ffi.Pointer<ffi.Void>,)>)>>(
+          'globalEnv_CallVoidMethod')
+      .asFunction<
+          jni.JThrowablePtr Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr,
+              ffi.Pointer<ffi.Void>)>();
+
+  /// from: public void addRequestFinishedListener(org.chromium.net.RequestFinishedInfo$Listener listener)
+  void addRequestFinishedListener(
+    RequestFinishedInfo_Listener listener,
+  ) {
+    _addRequestFinishedListener(
+            reference.pointer,
+            _id_addRequestFinishedListener as jni.JMethodIDPtr,
+            listener.reference.pointer)
+        .check();
+  }
+
+  static final _id_removeRequestFinishedListener = _class.instanceMethodId(
+    r'removeRequestFinishedListener',
+    r'(Lorg/chromium/net/RequestFinishedInfo$Listener;)V',
+  );
+
+  static final _removeRequestFinishedListener = ProtectedJniExtensions.lookup<
+              ffi.NativeFunction<
+                  jni.JThrowablePtr Function(
+                      ffi.Pointer<ffi.Void>,
+                      jni.JMethodIDPtr,
+                      ffi.VarArgs<(ffi.Pointer<ffi.Void>,)>)>>(
+          'globalEnv_CallVoidMethod')
+      .asFunction<
+          jni.JThrowablePtr Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr,
+              ffi.Pointer<ffi.Void>)>();
+
+  /// from: public void removeRequestFinishedListener(org.chromium.net.RequestFinishedInfo$Listener listener)
+  void removeRequestFinishedListener(
+    RequestFinishedInfo_Listener listener,
+  ) {
+    _removeRequestFinishedListener(
+            reference.pointer,
+            _id_removeRequestFinishedListener as jni.JMethodIDPtr,
+            listener.reference.pointer)
+        .check();
+  }
+
+  static final _id_getHttpRttMs = _class.instanceMethodId(
+    r'getHttpRttMs',
+    r'()I',
+  );
+
+  static final _getHttpRttMs = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(
+                ffi.Pointer<ffi.Void>,
+                jni.JMethodIDPtr,
+              )>>('globalEnv_CallIntMethod')
+      .asFunction<
+          jni.JniResult Function(
+            ffi.Pointer<ffi.Void>,
+            jni.JMethodIDPtr,
+          )>();
+
+  /// from: public int getHttpRttMs()
+  int getHttpRttMs() {
+    return _getHttpRttMs(
+            reference.pointer, _id_getHttpRttMs as jni.JMethodIDPtr)
+        .integer;
+  }
+
+  static final _id_getTransportRttMs = _class.instanceMethodId(
+    r'getTransportRttMs',
+    r'()I',
+  );
+
+  static final _getTransportRttMs = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(
+                ffi.Pointer<ffi.Void>,
+                jni.JMethodIDPtr,
+              )>>('globalEnv_CallIntMethod')
+      .asFunction<
+          jni.JniResult Function(
+            ffi.Pointer<ffi.Void>,
+            jni.JMethodIDPtr,
+          )>();
+
+  /// from: public int getTransportRttMs()
+  int getTransportRttMs() {
+    return _getTransportRttMs(
+            reference.pointer, _id_getTransportRttMs as jni.JMethodIDPtr)
+        .integer;
+  }
+
+  static final _id_getDownstreamThroughputKbps = _class.instanceMethodId(
+    r'getDownstreamThroughputKbps',
+    r'()I',
+  );
+
+  static final _getDownstreamThroughputKbps = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(
+                ffi.Pointer<ffi.Void>,
+                jni.JMethodIDPtr,
+              )>>('globalEnv_CallIntMethod')
+      .asFunction<
+          jni.JniResult Function(
+            ffi.Pointer<ffi.Void>,
+            jni.JMethodIDPtr,
+          )>();
+
+  /// from: public int getDownstreamThroughputKbps()
+  int getDownstreamThroughputKbps() {
+    return _getDownstreamThroughputKbps(reference.pointer,
+            _id_getDownstreamThroughputKbps as jni.JMethodIDPtr)
+        .integer;
+  }
+
+  static final _id_startNetLogToDisk = _class.instanceMethodId(
+    r'startNetLogToDisk',
+    r'(Ljava/lang/String;ZI)V',
+  );
+
+  static final _startNetLogToDisk = ProtectedJniExtensions.lookup<
+              ffi.NativeFunction<
+                  jni.JThrowablePtr Function(
+                      ffi.Pointer<ffi.Void>,
+                      jni.JMethodIDPtr,
+                      ffi.VarArgs<(ffi.Pointer<ffi.Void>, $Int32, $Int32)>)>>(
+          'globalEnv_CallVoidMethod')
+      .asFunction<
+          jni.JThrowablePtr Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr,
+              ffi.Pointer<ffi.Void>, int, int)>();
+
+  /// from: public void startNetLogToDisk(java.lang.String string, boolean z, int i)
+  void startNetLogToDisk(
+    jni.JString string,
+    bool z,
+    int i,
+  ) {
+    _startNetLogToDisk(
+            reference.pointer,
+            _id_startNetLogToDisk as jni.JMethodIDPtr,
+            string.reference.pointer,
+            z ? 1 : 0,
+            i)
+        .check();
+  }
+
+  static final _id_getEffectiveConnectionType = _class.instanceMethodId(
+    r'getEffectiveConnectionType',
+    r'()I',
+  );
+
+  static final _getEffectiveConnectionType = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(
+                ffi.Pointer<ffi.Void>,
+                jni.JMethodIDPtr,
+              )>>('globalEnv_CallIntMethod')
+      .asFunction<
+          jni.JniResult Function(
+            ffi.Pointer<ffi.Void>,
+            jni.JMethodIDPtr,
+          )>();
+
+  /// from: public int getEffectiveConnectionType()
+  int getEffectiveConnectionType() {
+    return _getEffectiveConnectionType(reference.pointer,
+            _id_getEffectiveConnectionType as jni.JMethodIDPtr)
+        .integer;
+  }
+
+  static final _id_configureNetworkQualityEstimatorForTesting =
+      _class.instanceMethodId(
+    r'configureNetworkQualityEstimatorForTesting',
+    r'(ZZZ)V',
+  );
+
+  static final _configureNetworkQualityEstimatorForTesting =
+      ProtectedJniExtensions.lookup<
+                  ffi.NativeFunction<
+                      jni.JThrowablePtr Function(
+                          ffi.Pointer<ffi.Void>,
+                          jni.JMethodIDPtr,
+                          ffi.VarArgs<($Int32, $Int32, $Int32)>)>>(
+              'globalEnv_CallVoidMethod')
+          .asFunction<
+              jni.JThrowablePtr Function(
+                  ffi.Pointer<ffi.Void>, jni.JMethodIDPtr, int, int, int)>();
+
+  /// from: public void configureNetworkQualityEstimatorForTesting(boolean z, boolean z1, boolean z2)
+  void configureNetworkQualityEstimatorForTesting(
+    bool z,
+    bool z1,
+    bool z2,
+  ) {
+    _configureNetworkQualityEstimatorForTesting(
+            reference.pointer,
+            _id_configureNetworkQualityEstimatorForTesting as jni.JMethodIDPtr,
+            z ? 1 : 0,
+            z1 ? 1 : 0,
+            z2 ? 1 : 0)
+        .check();
+  }
+
+  static final _id_addRttListener = _class.instanceMethodId(
+    r'addRttListener',
+    r'(Lorg/chromium/net/NetworkQualityRttListener;)V',
+  );
+
+  static final _addRttListener = ProtectedJniExtensions.lookup<
+              ffi.NativeFunction<
+                  jni.JThrowablePtr Function(
+                      ffi.Pointer<ffi.Void>,
+                      jni.JMethodIDPtr,
+                      ffi.VarArgs<(ffi.Pointer<ffi.Void>,)>)>>(
+          'globalEnv_CallVoidMethod')
+      .asFunction<
+          jni.JThrowablePtr Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr,
+              ffi.Pointer<ffi.Void>)>();
+
+  /// from: public void addRttListener(org.chromium.net.NetworkQualityRttListener networkQualityRttListener)
+  void addRttListener(
+    jni.JObject networkQualityRttListener,
+  ) {
+    _addRttListener(reference.pointer, _id_addRttListener as jni.JMethodIDPtr,
+            networkQualityRttListener.reference.pointer)
+        .check();
+  }
+
+  static final _id_removeRttListener = _class.instanceMethodId(
+    r'removeRttListener',
+    r'(Lorg/chromium/net/NetworkQualityRttListener;)V',
+  );
+
+  static final _removeRttListener = ProtectedJniExtensions.lookup<
+              ffi.NativeFunction<
+                  jni.JThrowablePtr Function(
+                      ffi.Pointer<ffi.Void>,
+                      jni.JMethodIDPtr,
+                      ffi.VarArgs<(ffi.Pointer<ffi.Void>,)>)>>(
+          'globalEnv_CallVoidMethod')
+      .asFunction<
+          jni.JThrowablePtr Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr,
+              ffi.Pointer<ffi.Void>)>();
+
+  /// from: public void removeRttListener(org.chromium.net.NetworkQualityRttListener networkQualityRttListener)
+  void removeRttListener(
+    jni.JObject networkQualityRttListener,
+  ) {
+    _removeRttListener(
+            reference.pointer,
+            _id_removeRttListener as jni.JMethodIDPtr,
+            networkQualityRttListener.reference.pointer)
+        .check();
+  }
+
+  static final _id_addThroughputListener = _class.instanceMethodId(
+    r'addThroughputListener',
+    r'(Lorg/chromium/net/NetworkQualityThroughputListener;)V',
+  );
+
+  static final _addThroughputListener = ProtectedJniExtensions.lookup<
+              ffi.NativeFunction<
+                  jni.JThrowablePtr Function(
+                      ffi.Pointer<ffi.Void>,
+                      jni.JMethodIDPtr,
+                      ffi.VarArgs<(ffi.Pointer<ffi.Void>,)>)>>(
+          'globalEnv_CallVoidMethod')
+      .asFunction<
+          jni.JThrowablePtr Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr,
+              ffi.Pointer<ffi.Void>)>();
+
+  /// from: public void addThroughputListener(org.chromium.net.NetworkQualityThroughputListener networkQualityThroughputListener)
+  void addThroughputListener(
+    jni.JObject networkQualityThroughputListener,
+  ) {
+    _addThroughputListener(
+            reference.pointer,
+            _id_addThroughputListener as jni.JMethodIDPtr,
+            networkQualityThroughputListener.reference.pointer)
+        .check();
+  }
+
+  static final _id_removeThroughputListener = _class.instanceMethodId(
+    r'removeThroughputListener',
+    r'(Lorg/chromium/net/NetworkQualityThroughputListener;)V',
+  );
+
+  static final _removeThroughputListener = ProtectedJniExtensions.lookup<
+              ffi.NativeFunction<
+                  jni.JThrowablePtr Function(
+                      ffi.Pointer<ffi.Void>,
+                      jni.JMethodIDPtr,
+                      ffi.VarArgs<(ffi.Pointer<ffi.Void>,)>)>>(
+          'globalEnv_CallVoidMethod')
+      .asFunction<
+          jni.JThrowablePtr Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr,
+              ffi.Pointer<ffi.Void>)>();
+
+  /// from: public void removeThroughputListener(org.chromium.net.NetworkQualityThroughputListener networkQualityThroughputListener)
+  void removeThroughputListener(
+    jni.JObject networkQualityThroughputListener,
+  ) {
+    _removeThroughputListener(
+            reference.pointer,
+            _id_removeThroughputListener as jni.JMethodIDPtr,
+            networkQualityThroughputListener.reference.pointer)
+        .check();
   }
 }
 
@@ -3457,6 +5261,108 @@ class UrlRequest_Builder extends jni.JObject {
   UrlRequest_Builder allowDirectExecutor() {
     return _allowDirectExecutor(
             reference.pointer, _id_allowDirectExecutor as jni.JMethodIDPtr)
+        .object(const $UrlRequest_BuilderType());
+  }
+
+  static final _id_addRequestAnnotation = _class.instanceMethodId(
+    r'addRequestAnnotation',
+    r'(Ljava/lang/Object;)Lorg/chromium/net/UrlRequest$Builder;',
+  );
+
+  static final _addRequestAnnotation = ProtectedJniExtensions.lookup<
+              ffi.NativeFunction<
+                  jni.JniResult Function(
+                      ffi.Pointer<ffi.Void>,
+                      jni.JMethodIDPtr,
+                      ffi.VarArgs<(ffi.Pointer<ffi.Void>,)>)>>(
+          'globalEnv_CallObjectMethod')
+      .asFunction<
+          jni.JniResult Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr,
+              ffi.Pointer<ffi.Void>)>();
+
+  /// from: public org.chromium.net.UrlRequest$Builder addRequestAnnotation(java.lang.Object object)
+  /// The returned object must be released after use, by calling the [release] method.
+  UrlRequest_Builder addRequestAnnotation(
+    jni.JObject object,
+  ) {
+    return _addRequestAnnotation(
+            reference.pointer,
+            _id_addRequestAnnotation as jni.JMethodIDPtr,
+            object.reference.pointer)
+        .object(const $UrlRequest_BuilderType());
+  }
+
+  static final _id_setTrafficStatsTag = _class.instanceMethodId(
+    r'setTrafficStatsTag',
+    r'(I)Lorg/chromium/net/UrlRequest$Builder;',
+  );
+
+  static final _setTrafficStatsTag = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr,
+                  ffi.VarArgs<($Int32,)>)>>('globalEnv_CallObjectMethod')
+      .asFunction<
+          jni.JniResult Function(
+              ffi.Pointer<ffi.Void>, jni.JMethodIDPtr, int)>();
+
+  /// from: public org.chromium.net.UrlRequest$Builder setTrafficStatsTag(int i)
+  /// The returned object must be released after use, by calling the [release] method.
+  UrlRequest_Builder setTrafficStatsTag(
+    int i,
+  ) {
+    return _setTrafficStatsTag(
+            reference.pointer, _id_setTrafficStatsTag as jni.JMethodIDPtr, i)
+        .object(const $UrlRequest_BuilderType());
+  }
+
+  static final _id_setTrafficStatsUid = _class.instanceMethodId(
+    r'setTrafficStatsUid',
+    r'(I)Lorg/chromium/net/UrlRequest$Builder;',
+  );
+
+  static final _setTrafficStatsUid = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr,
+                  ffi.VarArgs<($Int32,)>)>>('globalEnv_CallObjectMethod')
+      .asFunction<
+          jni.JniResult Function(
+              ffi.Pointer<ffi.Void>, jni.JMethodIDPtr, int)>();
+
+  /// from: public org.chromium.net.UrlRequest$Builder setTrafficStatsUid(int i)
+  /// The returned object must be released after use, by calling the [release] method.
+  UrlRequest_Builder setTrafficStatsUid(
+    int i,
+  ) {
+    return _setTrafficStatsUid(
+            reference.pointer, _id_setTrafficStatsUid as jni.JMethodIDPtr, i)
+        .object(const $UrlRequest_BuilderType());
+  }
+
+  static final _id_setRequestFinishedListener = _class.instanceMethodId(
+    r'setRequestFinishedListener',
+    r'(Lorg/chromium/net/RequestFinishedInfo$Listener;)Lorg/chromium/net/UrlRequest$Builder;',
+  );
+
+  static final _setRequestFinishedListener = ProtectedJniExtensions.lookup<
+              ffi.NativeFunction<
+                  jni.JniResult Function(
+                      ffi.Pointer<ffi.Void>,
+                      jni.JMethodIDPtr,
+                      ffi.VarArgs<(ffi.Pointer<ffi.Void>,)>)>>(
+          'globalEnv_CallObjectMethod')
+      .asFunction<
+          jni.JniResult Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr,
+              ffi.Pointer<ffi.Void>)>();
+
+  /// from: public org.chromium.net.UrlRequest$Builder setRequestFinishedListener(org.chromium.net.RequestFinishedInfo$Listener listener)
+  /// The returned object must be released after use, by calling the [release] method.
+  UrlRequest_Builder setRequestFinishedListener(
+    RequestFinishedInfo_Listener listener,
+  ) {
+    return _setRequestFinishedListener(
+            reference.pointer,
+            _id_setRequestFinishedListener as jni.JMethodIDPtr,
+            listener.reference.pointer)
         .object(const $UrlRequest_BuilderType());
   }
 
@@ -4584,5 +6490,855 @@ final class $UrlResponseInfoType extends jni.JObjType<UrlResponseInfo> {
   bool operator ==(Object other) {
     return other.runtimeType == ($UrlResponseInfoType) &&
         other is $UrlResponseInfoType;
+  }
+}
+
+/// from: org.chromium.net.RequestFinishedInfo$Listener
+class RequestFinishedInfo_Listener extends jni.JObject {
+  @override
+  late final jni.JObjType<RequestFinishedInfo_Listener> $type = type;
+
+  RequestFinishedInfo_Listener.fromReference(
+    jni.JReference reference,
+  ) : super.fromReference(reference);
+
+  static final _class =
+      jni.JClass.forName(r'org/chromium/net/RequestFinishedInfo$Listener');
+
+  /// The type which includes information such as the signature of this class.
+  static const type = $RequestFinishedInfo_ListenerType();
+  static final _id_new0 = _class.constructorId(
+    r'(Ljava/util/concurrent/Executor;)V',
+  );
+
+  static final _new0 = ProtectedJniExtensions.lookup<
+              ffi.NativeFunction<
+                  jni.JniResult Function(
+                      ffi.Pointer<ffi.Void>,
+                      jni.JMethodIDPtr,
+                      ffi.VarArgs<(ffi.Pointer<ffi.Void>,)>)>>(
+          'globalEnv_NewObject')
+      .asFunction<
+          jni.JniResult Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr,
+              ffi.Pointer<ffi.Void>)>();
+
+  /// from: public void <init>(java.util.concurrent.Executor executor)
+  /// The returned object must be released after use, by calling the [release] method.
+  factory RequestFinishedInfo_Listener(
+    jni.JObject executor,
+  ) {
+    return RequestFinishedInfo_Listener.fromReference(_new0(
+            _class.reference.pointer,
+            _id_new0 as jni.JMethodIDPtr,
+            executor.reference.pointer)
+        .reference);
+  }
+
+  static final _id_onRequestFinished = _class.instanceMethodId(
+    r'onRequestFinished',
+    r'(Lorg/chromium/net/RequestFinishedInfo;)V',
+  );
+
+  static final _onRequestFinished = ProtectedJniExtensions.lookup<
+              ffi.NativeFunction<
+                  jni.JThrowablePtr Function(
+                      ffi.Pointer<ffi.Void>,
+                      jni.JMethodIDPtr,
+                      ffi.VarArgs<(ffi.Pointer<ffi.Void>,)>)>>(
+          'globalEnv_CallVoidMethod')
+      .asFunction<
+          jni.JThrowablePtr Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr,
+              ffi.Pointer<ffi.Void>)>();
+
+  /// from: public abstract void onRequestFinished(org.chromium.net.RequestFinishedInfo requestFinishedInfo)
+  void onRequestFinished(
+    RequestFinishedInfo requestFinishedInfo,
+  ) {
+    _onRequestFinished(
+            reference.pointer,
+            _id_onRequestFinished as jni.JMethodIDPtr,
+            requestFinishedInfo.reference.pointer)
+        .check();
+  }
+
+  static final _id_getExecutor = _class.instanceMethodId(
+    r'getExecutor',
+    r'()Ljava/util/concurrent/Executor;',
+  );
+
+  static final _getExecutor = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(
+                ffi.Pointer<ffi.Void>,
+                jni.JMethodIDPtr,
+              )>>('globalEnv_CallObjectMethod')
+      .asFunction<
+          jni.JniResult Function(
+            ffi.Pointer<ffi.Void>,
+            jni.JMethodIDPtr,
+          )>();
+
+  /// from: public java.util.concurrent.Executor getExecutor()
+  /// The returned object must be released after use, by calling the [release] method.
+  jni.JObject getExecutor() {
+    return _getExecutor(reference.pointer, _id_getExecutor as jni.JMethodIDPtr)
+        .object(const jni.JObjectType());
+  }
+}
+
+final class $RequestFinishedInfo_ListenerType
+    extends jni.JObjType<RequestFinishedInfo_Listener> {
+  const $RequestFinishedInfo_ListenerType();
+
+  @override
+  String get signature => r'Lorg/chromium/net/RequestFinishedInfo$Listener;';
+
+  @override
+  RequestFinishedInfo_Listener fromReference(jni.JReference reference) =>
+      RequestFinishedInfo_Listener.fromReference(reference);
+
+  @override
+  jni.JObjType get superType => const jni.JObjectType();
+
+  @override
+  final superCount = 1;
+
+  @override
+  int get hashCode => ($RequestFinishedInfo_ListenerType).hashCode;
+
+  @override
+  bool operator ==(Object other) {
+    return other.runtimeType == ($RequestFinishedInfo_ListenerType) &&
+        other is $RequestFinishedInfo_ListenerType;
+  }
+}
+
+/// from: org.chromium.net.RequestFinishedInfo$Metrics
+class RequestFinishedInfo_Metrics extends jni.JObject {
+  @override
+  late final jni.JObjType<RequestFinishedInfo_Metrics> $type = type;
+
+  RequestFinishedInfo_Metrics.fromReference(
+    jni.JReference reference,
+  ) : super.fromReference(reference);
+
+  static final _class =
+      jni.JClass.forName(r'org/chromium/net/RequestFinishedInfo$Metrics');
+
+  /// The type which includes information such as the signature of this class.
+  static const type = $RequestFinishedInfo_MetricsType();
+  static final _id_new0 = _class.constructorId(
+    r'()V',
+  );
+
+  static final _new0 = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(
+                ffi.Pointer<ffi.Void>,
+                jni.JMethodIDPtr,
+              )>>('globalEnv_NewObject')
+      .asFunction<
+          jni.JniResult Function(
+            ffi.Pointer<ffi.Void>,
+            jni.JMethodIDPtr,
+          )>();
+
+  /// from: public void <init>()
+  /// The returned object must be released after use, by calling the [release] method.
+  factory RequestFinishedInfo_Metrics() {
+    return RequestFinishedInfo_Metrics.fromReference(
+        _new0(_class.reference.pointer, _id_new0 as jni.JMethodIDPtr)
+            .reference);
+  }
+
+  static final _id_getRequestStart = _class.instanceMethodId(
+    r'getRequestStart',
+    r'()Ljava/util/Date;',
+  );
+
+  static final _getRequestStart = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(
+                ffi.Pointer<ffi.Void>,
+                jni.JMethodIDPtr,
+              )>>('globalEnv_CallObjectMethod')
+      .asFunction<
+          jni.JniResult Function(
+            ffi.Pointer<ffi.Void>,
+            jni.JMethodIDPtr,
+          )>();
+
+  /// from: public abstract java.util.Date getRequestStart()
+  /// The returned object must be released after use, by calling the [release] method.
+  Date getRequestStart() {
+    return _getRequestStart(
+            reference.pointer, _id_getRequestStart as jni.JMethodIDPtr)
+        .object(const $DateType());
+  }
+
+  static final _id_getDnsStart = _class.instanceMethodId(
+    r'getDnsStart',
+    r'()Ljava/util/Date;',
+  );
+
+  static final _getDnsStart = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(
+                ffi.Pointer<ffi.Void>,
+                jni.JMethodIDPtr,
+              )>>('globalEnv_CallObjectMethod')
+      .asFunction<
+          jni.JniResult Function(
+            ffi.Pointer<ffi.Void>,
+            jni.JMethodIDPtr,
+          )>();
+
+  /// from: public abstract java.util.Date getDnsStart()
+  /// The returned object must be released after use, by calling the [release] method.
+  Date getDnsStart() {
+    return _getDnsStart(reference.pointer, _id_getDnsStart as jni.JMethodIDPtr)
+        .object(const $DateType());
+  }
+
+  static final _id_getDnsEnd = _class.instanceMethodId(
+    r'getDnsEnd',
+    r'()Ljava/util/Date;',
+  );
+
+  static final _getDnsEnd = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(
+                ffi.Pointer<ffi.Void>,
+                jni.JMethodIDPtr,
+              )>>('globalEnv_CallObjectMethod')
+      .asFunction<
+          jni.JniResult Function(
+            ffi.Pointer<ffi.Void>,
+            jni.JMethodIDPtr,
+          )>();
+
+  /// from: public abstract java.util.Date getDnsEnd()
+  /// The returned object must be released after use, by calling the [release] method.
+  Date getDnsEnd() {
+    return _getDnsEnd(reference.pointer, _id_getDnsEnd as jni.JMethodIDPtr)
+        .object(const $DateType());
+  }
+
+  static final _id_getConnectStart = _class.instanceMethodId(
+    r'getConnectStart',
+    r'()Ljava/util/Date;',
+  );
+
+  static final _getConnectStart = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(
+                ffi.Pointer<ffi.Void>,
+                jni.JMethodIDPtr,
+              )>>('globalEnv_CallObjectMethod')
+      .asFunction<
+          jni.JniResult Function(
+            ffi.Pointer<ffi.Void>,
+            jni.JMethodIDPtr,
+          )>();
+
+  /// from: public abstract java.util.Date getConnectStart()
+  /// The returned object must be released after use, by calling the [release] method.
+  Date getConnectStart() {
+    return _getConnectStart(
+            reference.pointer, _id_getConnectStart as jni.JMethodIDPtr)
+        .object(const $DateType());
+  }
+
+  static final _id_getConnectEnd = _class.instanceMethodId(
+    r'getConnectEnd',
+    r'()Ljava/util/Date;',
+  );
+
+  static final _getConnectEnd = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(
+                ffi.Pointer<ffi.Void>,
+                jni.JMethodIDPtr,
+              )>>('globalEnv_CallObjectMethod')
+      .asFunction<
+          jni.JniResult Function(
+            ffi.Pointer<ffi.Void>,
+            jni.JMethodIDPtr,
+          )>();
+
+  /// from: public abstract java.util.Date getConnectEnd()
+  /// The returned object must be released after use, by calling the [release] method.
+  Date getConnectEnd() {
+    return _getConnectEnd(
+            reference.pointer, _id_getConnectEnd as jni.JMethodIDPtr)
+        .object(const $DateType());
+  }
+
+  static final _id_getSslStart = _class.instanceMethodId(
+    r'getSslStart',
+    r'()Ljava/util/Date;',
+  );
+
+  static final _getSslStart = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(
+                ffi.Pointer<ffi.Void>,
+                jni.JMethodIDPtr,
+              )>>('globalEnv_CallObjectMethod')
+      .asFunction<
+          jni.JniResult Function(
+            ffi.Pointer<ffi.Void>,
+            jni.JMethodIDPtr,
+          )>();
+
+  /// from: public abstract java.util.Date getSslStart()
+  /// The returned object must be released after use, by calling the [release] method.
+  Date getSslStart() {
+    return _getSslStart(reference.pointer, _id_getSslStart as jni.JMethodIDPtr)
+        .object(const $DateType());
+  }
+
+  static final _id_getSslEnd = _class.instanceMethodId(
+    r'getSslEnd',
+    r'()Ljava/util/Date;',
+  );
+
+  static final _getSslEnd = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(
+                ffi.Pointer<ffi.Void>,
+                jni.JMethodIDPtr,
+              )>>('globalEnv_CallObjectMethod')
+      .asFunction<
+          jni.JniResult Function(
+            ffi.Pointer<ffi.Void>,
+            jni.JMethodIDPtr,
+          )>();
+
+  /// from: public abstract java.util.Date getSslEnd()
+  /// The returned object must be released after use, by calling the [release] method.
+  Date getSslEnd() {
+    return _getSslEnd(reference.pointer, _id_getSslEnd as jni.JMethodIDPtr)
+        .object(const $DateType());
+  }
+
+  static final _id_getSendingStart = _class.instanceMethodId(
+    r'getSendingStart',
+    r'()Ljava/util/Date;',
+  );
+
+  static final _getSendingStart = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(
+                ffi.Pointer<ffi.Void>,
+                jni.JMethodIDPtr,
+              )>>('globalEnv_CallObjectMethod')
+      .asFunction<
+          jni.JniResult Function(
+            ffi.Pointer<ffi.Void>,
+            jni.JMethodIDPtr,
+          )>();
+
+  /// from: public abstract java.util.Date getSendingStart()
+  /// The returned object must be released after use, by calling the [release] method.
+  Date getSendingStart() {
+    return _getSendingStart(
+            reference.pointer, _id_getSendingStart as jni.JMethodIDPtr)
+        .object(const $DateType());
+  }
+
+  static final _id_getSendingEnd = _class.instanceMethodId(
+    r'getSendingEnd',
+    r'()Ljava/util/Date;',
+  );
+
+  static final _getSendingEnd = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(
+                ffi.Pointer<ffi.Void>,
+                jni.JMethodIDPtr,
+              )>>('globalEnv_CallObjectMethod')
+      .asFunction<
+          jni.JniResult Function(
+            ffi.Pointer<ffi.Void>,
+            jni.JMethodIDPtr,
+          )>();
+
+  /// from: public abstract java.util.Date getSendingEnd()
+  /// The returned object must be released after use, by calling the [release] method.
+  Date getSendingEnd() {
+    return _getSendingEnd(
+            reference.pointer, _id_getSendingEnd as jni.JMethodIDPtr)
+        .object(const $DateType());
+  }
+
+  static final _id_getPushStart = _class.instanceMethodId(
+    r'getPushStart',
+    r'()Ljava/util/Date;',
+  );
+
+  static final _getPushStart = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(
+                ffi.Pointer<ffi.Void>,
+                jni.JMethodIDPtr,
+              )>>('globalEnv_CallObjectMethod')
+      .asFunction<
+          jni.JniResult Function(
+            ffi.Pointer<ffi.Void>,
+            jni.JMethodIDPtr,
+          )>();
+
+  /// from: public abstract java.util.Date getPushStart()
+  /// The returned object must be released after use, by calling the [release] method.
+  Date getPushStart() {
+    return _getPushStart(
+            reference.pointer, _id_getPushStart as jni.JMethodIDPtr)
+        .object(const $DateType());
+  }
+
+  static final _id_getPushEnd = _class.instanceMethodId(
+    r'getPushEnd',
+    r'()Ljava/util/Date;',
+  );
+
+  static final _getPushEnd = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(
+                ffi.Pointer<ffi.Void>,
+                jni.JMethodIDPtr,
+              )>>('globalEnv_CallObjectMethod')
+      .asFunction<
+          jni.JniResult Function(
+            ffi.Pointer<ffi.Void>,
+            jni.JMethodIDPtr,
+          )>();
+
+  /// from: public abstract java.util.Date getPushEnd()
+  /// The returned object must be released after use, by calling the [release] method.
+  Date getPushEnd() {
+    return _getPushEnd(reference.pointer, _id_getPushEnd as jni.JMethodIDPtr)
+        .object(const $DateType());
+  }
+
+  static final _id_getResponseStart = _class.instanceMethodId(
+    r'getResponseStart',
+    r'()Ljava/util/Date;',
+  );
+
+  static final _getResponseStart = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(
+                ffi.Pointer<ffi.Void>,
+                jni.JMethodIDPtr,
+              )>>('globalEnv_CallObjectMethod')
+      .asFunction<
+          jni.JniResult Function(
+            ffi.Pointer<ffi.Void>,
+            jni.JMethodIDPtr,
+          )>();
+
+  /// from: public abstract java.util.Date getResponseStart()
+  /// The returned object must be released after use, by calling the [release] method.
+  Date getResponseStart() {
+    return _getResponseStart(
+            reference.pointer, _id_getResponseStart as jni.JMethodIDPtr)
+        .object(const $DateType());
+  }
+
+  static final _id_getRequestEnd = _class.instanceMethodId(
+    r'getRequestEnd',
+    r'()Ljava/util/Date;',
+  );
+
+  static final _getRequestEnd = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(
+                ffi.Pointer<ffi.Void>,
+                jni.JMethodIDPtr,
+              )>>('globalEnv_CallObjectMethod')
+      .asFunction<
+          jni.JniResult Function(
+            ffi.Pointer<ffi.Void>,
+            jni.JMethodIDPtr,
+          )>();
+
+  /// from: public abstract java.util.Date getRequestEnd()
+  /// The returned object must be released after use, by calling the [release] method.
+  Date getRequestEnd() {
+    return _getRequestEnd(
+            reference.pointer, _id_getRequestEnd as jni.JMethodIDPtr)
+        .object(const $DateType());
+  }
+
+  static final _id_getSocketReused = _class.instanceMethodId(
+    r'getSocketReused',
+    r'()Z',
+  );
+
+  static final _getSocketReused = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(
+                ffi.Pointer<ffi.Void>,
+                jni.JMethodIDPtr,
+              )>>('globalEnv_CallBooleanMethod')
+      .asFunction<
+          jni.JniResult Function(
+            ffi.Pointer<ffi.Void>,
+            jni.JMethodIDPtr,
+          )>();
+
+  /// from: public abstract boolean getSocketReused()
+  bool getSocketReused() {
+    return _getSocketReused(
+            reference.pointer, _id_getSocketReused as jni.JMethodIDPtr)
+        .boolean;
+  }
+
+  static final _id_getTtfbMs = _class.instanceMethodId(
+    r'getTtfbMs',
+    r'()Ljava/lang/Long;',
+  );
+
+  static final _getTtfbMs = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(
+                ffi.Pointer<ffi.Void>,
+                jni.JMethodIDPtr,
+              )>>('globalEnv_CallObjectMethod')
+      .asFunction<
+          jni.JniResult Function(
+            ffi.Pointer<ffi.Void>,
+            jni.JMethodIDPtr,
+          )>();
+
+  /// from: public abstract java.lang.Long getTtfbMs()
+  /// The returned object must be released after use, by calling the [release] method.
+  jni.JLong getTtfbMs() {
+    return _getTtfbMs(reference.pointer, _id_getTtfbMs as jni.JMethodIDPtr)
+        .object(const jni.JLongType());
+  }
+
+  static final _id_getTotalTimeMs = _class.instanceMethodId(
+    r'getTotalTimeMs',
+    r'()Ljava/lang/Long;',
+  );
+
+  static final _getTotalTimeMs = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(
+                ffi.Pointer<ffi.Void>,
+                jni.JMethodIDPtr,
+              )>>('globalEnv_CallObjectMethod')
+      .asFunction<
+          jni.JniResult Function(
+            ffi.Pointer<ffi.Void>,
+            jni.JMethodIDPtr,
+          )>();
+
+  /// from: public abstract java.lang.Long getTotalTimeMs()
+  /// The returned object must be released after use, by calling the [release] method.
+  jni.JLong getTotalTimeMs() {
+    return _getTotalTimeMs(
+            reference.pointer, _id_getTotalTimeMs as jni.JMethodIDPtr)
+        .object(const jni.JLongType());
+  }
+
+  static final _id_getSentByteCount = _class.instanceMethodId(
+    r'getSentByteCount',
+    r'()Ljava/lang/Long;',
+  );
+
+  static final _getSentByteCount = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(
+                ffi.Pointer<ffi.Void>,
+                jni.JMethodIDPtr,
+              )>>('globalEnv_CallObjectMethod')
+      .asFunction<
+          jni.JniResult Function(
+            ffi.Pointer<ffi.Void>,
+            jni.JMethodIDPtr,
+          )>();
+
+  /// from: public abstract java.lang.Long getSentByteCount()
+  /// The returned object must be released after use, by calling the [release] method.
+  jni.JLong getSentByteCount() {
+    return _getSentByteCount(
+            reference.pointer, _id_getSentByteCount as jni.JMethodIDPtr)
+        .object(const jni.JLongType());
+  }
+
+  static final _id_getReceivedByteCount = _class.instanceMethodId(
+    r'getReceivedByteCount',
+    r'()Ljava/lang/Long;',
+  );
+
+  static final _getReceivedByteCount = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(
+                ffi.Pointer<ffi.Void>,
+                jni.JMethodIDPtr,
+              )>>('globalEnv_CallObjectMethod')
+      .asFunction<
+          jni.JniResult Function(
+            ffi.Pointer<ffi.Void>,
+            jni.JMethodIDPtr,
+          )>();
+
+  /// from: public abstract java.lang.Long getReceivedByteCount()
+  /// The returned object must be released after use, by calling the [release] method.
+  jni.JLong getReceivedByteCount() {
+    return _getReceivedByteCount(
+            reference.pointer, _id_getReceivedByteCount as jni.JMethodIDPtr)
+        .object(const jni.JLongType());
+  }
+}
+
+final class $RequestFinishedInfo_MetricsType
+    extends jni.JObjType<RequestFinishedInfo_Metrics> {
+  const $RequestFinishedInfo_MetricsType();
+
+  @override
+  String get signature => r'Lorg/chromium/net/RequestFinishedInfo$Metrics;';
+
+  @override
+  RequestFinishedInfo_Metrics fromReference(jni.JReference reference) =>
+      RequestFinishedInfo_Metrics.fromReference(reference);
+
+  @override
+  jni.JObjType get superType => const jni.JObjectType();
+
+  @override
+  final superCount = 1;
+
+  @override
+  int get hashCode => ($RequestFinishedInfo_MetricsType).hashCode;
+
+  @override
+  bool operator ==(Object other) {
+    return other.runtimeType == ($RequestFinishedInfo_MetricsType) &&
+        other is $RequestFinishedInfo_MetricsType;
+  }
+}
+
+/// from: org.chromium.net.RequestFinishedInfo
+class RequestFinishedInfo extends jni.JObject {
+  @override
+  late final jni.JObjType<RequestFinishedInfo> $type = type;
+
+  RequestFinishedInfo.fromReference(
+    jni.JReference reference,
+  ) : super.fromReference(reference);
+
+  static final _class =
+      jni.JClass.forName(r'org/chromium/net/RequestFinishedInfo');
+
+  /// The type which includes information such as the signature of this class.
+  static const type = $RequestFinishedInfoType();
+
+  /// from: static public final int SUCCEEDED
+  static const SUCCEEDED = 0;
+
+  /// from: static public final int FAILED
+  static const FAILED = 1;
+
+  /// from: static public final int CANCELED
+  static const CANCELED = 2;
+  static final _id_new0 = _class.constructorId(
+    r'()V',
+  );
+
+  static final _new0 = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(
+                ffi.Pointer<ffi.Void>,
+                jni.JMethodIDPtr,
+              )>>('globalEnv_NewObject')
+      .asFunction<
+          jni.JniResult Function(
+            ffi.Pointer<ffi.Void>,
+            jni.JMethodIDPtr,
+          )>();
+
+  /// from: public void <init>()
+  /// The returned object must be released after use, by calling the [release] method.
+  factory RequestFinishedInfo() {
+    return RequestFinishedInfo.fromReference(
+        _new0(_class.reference.pointer, _id_new0 as jni.JMethodIDPtr)
+            .reference);
+  }
+
+  static final _id_getUrl = _class.instanceMethodId(
+    r'getUrl',
+    r'()Ljava/lang/String;',
+  );
+
+  static final _getUrl = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(
+                ffi.Pointer<ffi.Void>,
+                jni.JMethodIDPtr,
+              )>>('globalEnv_CallObjectMethod')
+      .asFunction<
+          jni.JniResult Function(
+            ffi.Pointer<ffi.Void>,
+            jni.JMethodIDPtr,
+          )>();
+
+  /// from: public abstract java.lang.String getUrl()
+  /// The returned object must be released after use, by calling the [release] method.
+  jni.JString getUrl() {
+    return _getUrl(reference.pointer, _id_getUrl as jni.JMethodIDPtr)
+        .object(const jni.JStringType());
+  }
+
+  static final _id_getAnnotations = _class.instanceMethodId(
+    r'getAnnotations',
+    r'()Ljava/util/Collection;',
+  );
+
+  static final _getAnnotations = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(
+                ffi.Pointer<ffi.Void>,
+                jni.JMethodIDPtr,
+              )>>('globalEnv_CallObjectMethod')
+      .asFunction<
+          jni.JniResult Function(
+            ffi.Pointer<ffi.Void>,
+            jni.JMethodIDPtr,
+          )>();
+
+  /// from: public abstract java.util.Collection getAnnotations()
+  /// The returned object must be released after use, by calling the [release] method.
+  jni.JObject getAnnotations() {
+    return _getAnnotations(
+            reference.pointer, _id_getAnnotations as jni.JMethodIDPtr)
+        .object(const jni.JObjectType());
+  }
+
+  static final _id_getMetrics = _class.instanceMethodId(
+    r'getMetrics',
+    r'()Lorg/chromium/net/RequestFinishedInfo$Metrics;',
+  );
+
+  static final _getMetrics = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(
+                ffi.Pointer<ffi.Void>,
+                jni.JMethodIDPtr,
+              )>>('globalEnv_CallObjectMethod')
+      .asFunction<
+          jni.JniResult Function(
+            ffi.Pointer<ffi.Void>,
+            jni.JMethodIDPtr,
+          )>();
+
+  /// from: public abstract org.chromium.net.RequestFinishedInfo$Metrics getMetrics()
+  /// The returned object must be released after use, by calling the [release] method.
+  RequestFinishedInfo_Metrics getMetrics() {
+    return _getMetrics(reference.pointer, _id_getMetrics as jni.JMethodIDPtr)
+        .object(const $RequestFinishedInfo_MetricsType());
+  }
+
+  static final _id_getFinishedReason = _class.instanceMethodId(
+    r'getFinishedReason',
+    r'()I',
+  );
+
+  static final _getFinishedReason = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(
+                ffi.Pointer<ffi.Void>,
+                jni.JMethodIDPtr,
+              )>>('globalEnv_CallIntMethod')
+      .asFunction<
+          jni.JniResult Function(
+            ffi.Pointer<ffi.Void>,
+            jni.JMethodIDPtr,
+          )>();
+
+  /// from: public abstract int getFinishedReason()
+  int getFinishedReason() {
+    return _getFinishedReason(
+            reference.pointer, _id_getFinishedReason as jni.JMethodIDPtr)
+        .integer;
+  }
+
+  static final _id_getResponseInfo = _class.instanceMethodId(
+    r'getResponseInfo',
+    r'()Lorg/chromium/net/UrlResponseInfo;',
+  );
+
+  static final _getResponseInfo = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(
+                ffi.Pointer<ffi.Void>,
+                jni.JMethodIDPtr,
+              )>>('globalEnv_CallObjectMethod')
+      .asFunction<
+          jni.JniResult Function(
+            ffi.Pointer<ffi.Void>,
+            jni.JMethodIDPtr,
+          )>();
+
+  /// from: public abstract org.chromium.net.UrlResponseInfo getResponseInfo()
+  /// The returned object must be released after use, by calling the [release] method.
+  UrlResponseInfo getResponseInfo() {
+    return _getResponseInfo(
+            reference.pointer, _id_getResponseInfo as jni.JMethodIDPtr)
+        .object(const $UrlResponseInfoType());
+  }
+
+  static final _id_getException = _class.instanceMethodId(
+    r'getException',
+    r'()Lorg/chromium/net/CronetException;',
+  );
+
+  static final _getException = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JniResult Function(
+                ffi.Pointer<ffi.Void>,
+                jni.JMethodIDPtr,
+              )>>('globalEnv_CallObjectMethod')
+      .asFunction<
+          jni.JniResult Function(
+            ffi.Pointer<ffi.Void>,
+            jni.JMethodIDPtr,
+          )>();
+
+  /// from: public abstract org.chromium.net.CronetException getException()
+  /// The returned object must be released after use, by calling the [release] method.
+  CronetException getException() {
+    return _getException(
+            reference.pointer, _id_getException as jni.JMethodIDPtr)
+        .object(const $CronetExceptionType());
+  }
+}
+
+final class $RequestFinishedInfoType extends jni.JObjType<RequestFinishedInfo> {
+  const $RequestFinishedInfoType();
+
+  @override
+  String get signature => r'Lorg/chromium/net/RequestFinishedInfo;';
+
+  @override
+  RequestFinishedInfo fromReference(jni.JReference reference) =>
+      RequestFinishedInfo.fromReference(reference);
+
+  @override
+  jni.JObjType get superType => const jni.JObjectType();
+
+  @override
+  final superCount = 1;
+
+  @override
+  int get hashCode => ($RequestFinishedInfoType).hashCode;
+
+  @override
+  bool operator ==(Object other) {
+    return other.runtimeType == ($RequestFinishedInfoType) &&
+        other is $RequestFinishedInfoType;
   }
 }
