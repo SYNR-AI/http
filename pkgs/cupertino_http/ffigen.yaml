@@ -5,7 +5,11 @@ description: |
 
   Regenerate bindings with `flutter packages pub run ffigen --config ffigen.yaml`.
 language: 'objc'
-output: 'lib/src/native_cupertino_bindings.dart'
+output:
+  bindings: 'lib/src/native_cupertino_bindings.dart'
+#  symbol-file:
+#    output: 'package:cupertino_http/src/native_cupertino_symbols.yaml'
+#    import-path: 'package:cupertino_http/src/native_cupertino_bindings.dart'
 headers:
   entry-points:
     - '/System/Volumes/Data/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Foundation.framework/Versions/C/Headers/NSArray.h'
@@ -26,6 +30,9 @@ headers:
     - 'src/CUPHTTPCompletionHelper.h'
     - 'src/CUPHTTPStreamToNSInputStreamAdapter.h'
     - 'src/CUPURLSessionConfigurationProxy.h'
+    - 'ios/Classes/headers/cronet.h'
+    - 'ios/Classes/CUPCronetProxy.h'
+
 preamble: |
   // ignore_for_file: always_specify_types
   // ignore_for_file: camel_case_types

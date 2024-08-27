@@ -8,18 +8,31 @@ import 'dart:io';
 import 'package:cupertino_http/cupertino_http.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'package:http/io_client.dart';
 import 'package:http_image_provider/http_image_provider.dart';
 import 'package:provider/provider.dart';
 
 import 'book.dart';
 
 void main() {
-  final Client httpClient;
-  httpClient = CupertinoClient.defaultSessionConfiguration();
+  Client httpClient;
 
   runApp(Provider<Client>(
-      create: (_) => httpClient,
+      create: (_) {
+        CupertinoCronet.setHttp2Enabled(false);
+        CupertinoCronet.setQuicEnabled(false);
+        CupertinoCronet.setMetricsEnabled(true);
+        CupertinoCronet.setHttpCacheType(
+            CupertinoCronetCacheType.CupertinoCronetHttpCacheTypeDisabled);
+        CupertinoCronet.setUserAgent_partial('Cronet', true);
+        CupertinoCronet.start();
+        CupertinoCronet.startNetLogToFile('cronet_dart.log', false);
+        CupertinoCronet.registerHttpProtocolHandler();
+        CupertinoCronet.setRequestFilterHostWhiteList(['museland.ai']);
+        final config = URLSessionConfiguration.defaultSessionConfiguration();
+        CupertinoCronet.installIntoSessionConfiguration(config);
+        httpClient = CupertinoClient.fromSessionConfiguration(config);
+        return httpClient;
+      },
       child: const BookSearchApp(),
       dispose: (_, client) => client.close()));
 }
@@ -56,20 +69,47 @@ class _HomePageState extends State<HomePage> {
 
   // Get the list of books matching `query`.
   // The `get` call will automatically use the `client` configured in `main`.
-  Future<List<Book>> _findMatchingBooks(String query) async {
+  Future<List<Book>?> _findMatchingBooks(String query) async {
+    https: //s1-resource-dev.museland.ai/muser/webp/post_507602102041413.webp
     final response = await _client.get(
-      Uri.https(
-        'www.googleapis.com',
-        '/books/v1/volumes',
-        {'q': query, 'maxResults': '20', 'printType': 'books'},
-      ),
+      Uri.https('s1-resource-dev.museland.ai',
+          'muser/webp/avatar_504893042629573.webp'),
     );
-
-    final json = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
-    return Book.listFromJson(json);
+    print('request end ${response.metrics}');
+    return null;
+    // final response = await _client.get(
+    //   Uri.https(
+    //     'www.googleapis.com',
+    //     '/books/v1/volumes',
+    //     {'q': query, 'maxResults': '20', 'printType': 'books'},
+    //   ),
+    // );
+    // print('response metric = ${response.metrics}');
+    // final json = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
+    // return Book.listFromJson(json);
   }
 
-  void _runSearch(String query) async {
+  Future<List<Book>?> _findMatchingBooks1(String query) async {
+    https: //s1-resource-dev.museland.ai/muser/webp/post_507602102041413.webp
+    final response = await _client.get(
+      Uri.https('s1-resource-dev.museland.ai',
+          'muser/webp/post_507602102041413.webp'),
+    );
+    print('request1 end ${response.metrics}');
+    return null;
+  }
+
+  Future<List<Book>?> _findMatchingBooks2(String query) async {
+    https: //s1-resource-dev.museland.ai/muser/webp/post_507602102041413.webp
+    final response = await _client.get(
+      Uri.https('s1-resource-dev.museland.ai',
+          'muser/webp/post_507269124975429.webp'),
+    );
+    print('request2 end ${response.metrics}');
+    return null;
+  }
+
+  void _runSearch(String query) {
     _lastQuery = query;
     if (query.isEmpty) {
       setState(() {
@@ -78,13 +118,12 @@ class _HomePageState extends State<HomePage> {
       return;
     }
 
-    final books = await _findMatchingBooks(query);
+    _findMatchingBooks(query);
+    _findMatchingBooks1(query);
+    _findMatchingBooks2(query);
+
     // Avoid the situation where a slow-running query finishes late and
     // replaces newer search results.
-    if (query != _lastQuery) return;
-    setState(() {
-      _books = books;
-    });
   }
 
   @override

@@ -168,7 +168,7 @@ class CupertinoClient extends BaseClient {
 
   static void _onFinishCollectingMetrics(
       URLSession session, URLSessionTask task, URLSessionTaskMetrics? metrics) {
-    print('collecting metric complete');
+    // print('collecting metric complete');
     if (metrics != null) {
       final taskTracker = _tracker(task);
       if (metrics.transactionMetrics.isNotEmpty) {
@@ -198,6 +198,7 @@ class CupertinoClient extends BaseClient {
               ((transactionMetrics.responseEndTime ?? 0) * 1000.0).toInt()
           ..totalTimeMs = (((metrics.taskInterval??0) <= 0.000001? ((transactionMetrics.responseEndTime??0) - (transactionMetrics.fetchStartTime??0)): metrics.taskInterval) * 1000).toInt()
           ..isSocketReuse = transactionMetrics.reusedConnection??false;
+        // print('protocolName = ${transactionMetrics.networkProtocolName}, remote ip = ${transactionMetrics.remoteAddress}');
         taskTracker.response?.metrics = httpMetrics;
         taskTracker.profile!.addEvent(HttpProfileRequestEvent(
             timestamp: DateTime.fromMillisecondsSinceEpoch(

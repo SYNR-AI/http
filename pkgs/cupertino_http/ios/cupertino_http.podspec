@@ -19,11 +19,13 @@ Pod::Spec.new do |s|
   # `../src/*` so that the C sources can be shared among all target platforms.
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
+  s.exclude_files = 'Classes/headers/*.h'
   s.dependency 'Flutter'
   s.platform = :ios, '12.0'
   s.requires_arc = []
 
-  s.preserve_paths = 'frameworks/Cronet.framework'
+  s.preserve_paths = 'frameworks/Cronet.xcframework'
+#  s.public_header_files = 'Classes/headers/*.h'
 
   # telling linker to include framework & fix symbol not found when without use_framework!
   s.vendored_frameworks = ['frameworks/Cronet.xcframework']

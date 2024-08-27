@@ -8,10 +8,10 @@ import cupertino_http
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
-    let config:CUPCronetConfig = CUPCronetConfig()
-    config.interceptHostWhiteList = ["googleapis.com"]
-    config.httpCacheMode = .disabled
-    CUPCronet.start(config: config)
+//     let config:CUPCronetConfig = CUPCronetConfig()
+//     config.interceptHostWhiteList = ["www.baidu.com", "googleapis.com", "google.com", "museland.ai"]
+//       config.httpCacheMode = .disabled
+//     CUPCronet.start(config: config)
     GeneratedPluginRegistrant.register(with: self)
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }

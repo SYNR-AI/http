@@ -53,6 +53,8 @@ abstract class _ObjectHolder<T extends ncb.NSObject> {
 
   @override
   int get hashCode => _nsObject.hashCode;
+
+  T get nsObject => _nsObject;
 }
 
 /// Settings for controlling whether cookies will be accepted.
@@ -278,6 +280,39 @@ class URLSessionConfiguration
   ///
   /// See [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:](https://developer.apple.com/documentation/foundation/nsurlsessionconfiguration/1407496-backgroundsessionconfigurationwi)
   factory URLSessionConfiguration.backgroundSession(String identifier) {
+    var ret =  ncb.NSURLSessionConfiguration
+        .backgroundSessionConfigurationWithIdentifier_(
+        helperLibs, identifier.toNSString(linkedLibs));
+    return URLSessionConfiguration._(ret, isBackground: true);
+  }
+
+  /// A configuration that uses caching and saves cookies and credentials.
+  ///
+  /// See [NSURLSessionConfiguration defaultSessionConfiguration](https://developer.apple.com/documentation/foundation/nsurlsessionconfiguration/1411560-defaultsessionconfiguration)
+  factory URLSessionConfiguration.defaultSessionConfiguration() {
+    var ret = ncb.NSURLSessionConfiguration
+        .getDefaultSessionConfiguration(
+        helperLibs);
+    return URLSessionConfiguration._(
+        ret, isBackground: false);
+  }
+
+  /// A session configuration that uses no persistent storage for caches,
+  /// cookies, or credentials.
+  ///
+  /// See [NSURLSessionConfiguration ephemeralSessionConfiguration](https://developer.apple.com/documentation/foundation/nsurlsessionconfiguration/1410529-ephemeralsessionconfiguration)
+  factory URLSessionConfiguration.ephemeralSessionConfiguration() {
+    var ret = ncb.NSURLSessionConfiguration
+        .getEphemeralSessionConfiguration(
+        helperLibs);
+    return URLSessionConfiguration._(ret, isBackground: false);
+  }
+
+  /// A configuration suitable for performing HTTP uploads and downloads in
+  /// the background.
+  ///
+  /// See [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:](https://developer.apple.com/documentation/foundation/nsurlsessionconfiguration/1407496-backgroundsessionconfigurationwi)
+  factory URLSessionConfiguration.backgroundSessionProxy(String identifier) {
     Pointer<ncb.ObjCObject> _ret =  ncb.CUPURLSessionConfigurationProxy
         .cupBackgroundSessionConfigurationWithIdentifier_(
         helperLibs, identifier.toNSString(linkedLibs));
@@ -288,7 +323,7 @@ class URLSessionConfiguration
   /// A configuration that uses caching and saves cookies and credentials.
   ///
   /// See [NSURLSessionConfiguration defaultSessionConfiguration](https://developer.apple.com/documentation/foundation/nsurlsessionconfiguration/1411560-defaultsessionconfiguration)
-  factory URLSessionConfiguration.defaultSessionConfiguration() {
+  factory URLSessionConfiguration.defaultSessionConfigurationProxy() {
     Pointer<ncb.ObjCObject> _ret = ncb.CUPURLSessionConfigurationProxy
         .getCupDefaultSessionConfiguration(
         helperLibs);
@@ -302,7 +337,7 @@ class URLSessionConfiguration
   /// cookies, or credentials.
   ///
   /// See [NSURLSessionConfiguration ephemeralSessionConfiguration](https://developer.apple.com/documentation/foundation/nsurlsessionconfiguration/1410529-ephemeralsessionconfiguration)
-  factory URLSessionConfiguration.ephemeralSessionConfiguration() {
+  factory URLSessionConfiguration.ephemeralSessionConfigurationProxy() {
     Pointer<ncb.ObjCObject> _ret = ncb.CUPURLSessionConfigurationProxy
         .getCupEphemeralSessionConfiguration(
         helperLibs);
@@ -1198,6 +1233,8 @@ class URLSessionTaskTransactionMetrics extends _ObjectHolder<ncb.NSURLSessionTas
 /// See [NSURLRequest](https://developer.apple.com/documentation/foundation/nsurlrequest)
 class URLRequest extends _ObjectHolder<ncb.NSURLRequest> {
   URLRequest._(super.c);
+
+  URLRequest.fromNativeURLRequest(super.request);
 
   /// Creates a request for a URL.
   ///
