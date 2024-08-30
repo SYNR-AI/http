@@ -282,7 +282,7 @@ class URLSessionConfiguration
   factory URLSessionConfiguration.backgroundSession(String identifier) {
     var ret =  ncb.NSURLSessionConfiguration
         .backgroundSessionConfigurationWithIdentifier_(
-        helperLibs, identifier.toNSString(linkedLibs));
+        linkedLibs, identifier.toNSString(linkedLibs));
     return URLSessionConfiguration._(ret, isBackground: true);
   }
 
@@ -292,7 +292,7 @@ class URLSessionConfiguration
   factory URLSessionConfiguration.defaultSessionConfiguration() {
     var ret = ncb.NSURLSessionConfiguration
         .getDefaultSessionConfiguration(
-        helperLibs);
+        linkedLibs);
     return URLSessionConfiguration._(
         ret, isBackground: false);
   }
@@ -304,7 +304,7 @@ class URLSessionConfiguration
   factory URLSessionConfiguration.ephemeralSessionConfiguration() {
     var ret = ncb.NSURLSessionConfiguration
         .getEphemeralSessionConfiguration(
-        helperLibs);
+        linkedLibs);
     return URLSessionConfiguration._(ret, isBackground: false);
   }
 

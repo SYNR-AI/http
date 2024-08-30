@@ -2,6 +2,7 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -18,16 +19,16 @@ void main() {
 
   runApp(Provider<Client>(
       create: (_) {
-        CupertinoCronet.setHttp2Enabled(false);
-        CupertinoCronet.setQuicEnabled(false);
-        CupertinoCronet.setMetricsEnabled(true);
-        CupertinoCronet.setHttpCacheType(
-            CupertinoCronetCacheType.CupertinoCronetHttpCacheTypeDisabled);
-        CupertinoCronet.setUserAgent_partial('Cronet', true);
-        CupertinoCronet.start();
-        CupertinoCronet.startNetLogToFile('cronet_dart.log', false);
-        CupertinoCronet.registerHttpProtocolHandler();
-        CupertinoCronet.setRequestFilterHostWhiteList(['museland.ai']);
+        // CupertinoCronet.setHttp2Enabled(false);
+        // CupertinoCronet.setQuicEnabled(false);
+        // CupertinoCronet.setMetricsEnabled(true);
+        // CupertinoCronet.setHttpCacheType(
+        //     CupertinoCronetCacheType.CupertinoCronetHttpCacheTypeDisabled);
+        // CupertinoCronet.setUserAgent_partial('Cronet', true);
+        // CupertinoCronet.start();
+        // CupertinoCronet.startNetLogToFile('cronet_dart.log', false);
+        // CupertinoCronet.registerHttpProtocolHandler();
+        // CupertinoCronet.setRequestFilterHostWhiteList(['museland.ai']);
         final config = URLSessionConfiguration.defaultSessionConfiguration();
         CupertinoCronet.installIntoSessionConfiguration(config);
         httpClient = CupertinoClient.fromSessionConfiguration(config);
@@ -76,6 +77,9 @@ class _HomePageState extends State<HomePage> {
           'muser/webp/avatar_504893042629573.webp'),
     );
     print('request end ${response.metrics}');
+    Timer(Duration(seconds: 10), () {
+      CupertinoCronet.stopNetLog();
+    });
     return null;
     // final response = await _client.get(
     //   Uri.https(
@@ -119,8 +123,8 @@ class _HomePageState extends State<HomePage> {
     }
 
     _findMatchingBooks(query);
-    _findMatchingBooks1(query);
-    _findMatchingBooks2(query);
+    // _findMatchingBooks1(query);
+    // _findMatchingBooks2(query);
 
     // Avoid the situation where a slow-running query finishes late and
     // replaces newer search results.
