@@ -427,6 +427,8 @@ class CronetClient extends BaseClient {
     _isClosed = true;
   }
 
+  CronetEngine get engine => _engine;
+
   _HttpClientRequestProfileWithStreamResponse? _createProfile(BaseRequest request) {
      var profile = HttpClientRequestProfile.profile(
         requestStartTime: DateTime.now(),
