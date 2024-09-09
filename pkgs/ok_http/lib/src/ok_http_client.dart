@@ -18,6 +18,8 @@ import 'dart:typed_data';
 import 'package:http/http.dart';
 import 'package:http_profile/http_profile.dart';
 import 'package:jni/jni.dart';
+import 'package:okttp_cronet_connector/okttp_cronet_connector.dart';
+import 'package:cronet_http/cronet_http.dart';
 
 import 'jni/bindings.dart' as bindings;
 
@@ -48,7 +50,10 @@ class OkHttpClient extends BaseClient {
   bool _isClosed = false;
 
   OkHttpClient() {
-    _client = bindings.OkHttpClient_Builder().addInterceptor();
+    final cronetEngine = CronetEngine.build();
+    _client = bindings.OkHttpClient_Builder()
+        .addInterceptor(OkttpCronetConnector.createCronetInterceptor(
+            cronetEngine.engine)).build();
   }
 
   @override

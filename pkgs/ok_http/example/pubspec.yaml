@@ -15,6 +15,10 @@ dependencies:
   http_image_provider: ^0.0.3
   ok_http:
     path: ../
+  okttp_cronet_connector:
+    git:
+      url: git@github.com:SYNR-AI/okttp_cronet_connector.git
+      ref: 7397d75e5c2f375e11f60c439bcc352a45adba96
   provider: ^6.1.1
   web_socket: ^0.1.5
 

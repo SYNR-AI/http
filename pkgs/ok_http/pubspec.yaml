@@ -14,8 +14,19 @@ dependencies:
   http: ^1.2.1
   http_profile: ^0.1.0
   jni: ^0.10.1
+  cronet_http:
+    git:
+      url: git@github.com:SYNR-AI/http.git
+      ref: b555312d1edea573057788e2cbabc2e00a0cad39
+      path: pkgs/cronet_http
+  okttp_cronet_connector:
+    git:
+      url: git@github.com:SYNR-AI/okttp_cronet_connector.git
+      ref: 7397d75e5c2f375e11f60c439bcc352a45adba96
   plugin_platform_interface: ^2.0.2
   web_socket: ^0.1.5
+
+
 
 dev_dependencies:
   dart_flutter_team_lints: ^3.0.0
