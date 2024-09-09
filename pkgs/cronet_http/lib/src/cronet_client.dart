@@ -145,6 +145,9 @@ class CronetEngine {
     }
     _isClosed = true;
   }
+
+  jb.CronetEngine get engine => _engine;
+
 }
 
 Map<String, String> _cronetToClientHeaders(
@@ -426,8 +429,6 @@ class CronetClient extends BaseClient {
     }
     _isClosed = true;
   }
-
-  CronetEngine get engine => _engine;
 
   _HttpClientRequestProfileWithStreamResponse? _createProfile(BaseRequest request) {
      var profile = HttpClientRequestProfile.profile(
