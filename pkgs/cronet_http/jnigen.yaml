@@ -21,6 +21,7 @@ classes:
   - 'org.chromium.net.UrlRequest'
   - 'org.chromium.net.UrlRequest'
   - 'org.chromium.net.UrlResponseInfo'
+  - 'org.chromium.net.DnsOptions'
 #  - 'org.chromium.net.UrlResponseInfo.Builder'
   - 'org.chromium.net.RequestFinishedInfo'
 
