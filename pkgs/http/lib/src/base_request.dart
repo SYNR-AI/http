@@ -88,6 +88,9 @@ abstract class BaseRequest {
   bool get finalized => _finalized;
   bool _finalized = false;
 
+  Duration? connectTimeout;
+  Duration? receiveTimeout;
+
   static final _tokenRE = RegExp(r"^[\w!#%&'*+\-.^`|~]+$");
   static String _validateMethod(String method) {
     if (!_tokenRE.hasMatch(method)) {

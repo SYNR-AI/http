@@ -222,6 +222,35 @@ class UrlRequestCallbackProxy_UrlRequestCallbackInterface extends jni.JObject {
         .check();
   }
 
+  static final _id_onCanceled = _class.instanceMethodId(
+    r'onCanceled',
+    r'(Lorg/chromium/net/UrlRequest;Lorg/chromium/net/UrlResponseInfo;)V',
+  );
+
+  static final _onCanceled = ProtectedJniExtensions.lookup<
+      ffi.NativeFunction<
+          jni.JThrowablePtr Function(
+              ffi.Pointer<ffi.Void>,
+              jni.JMethodIDPtr,
+              ffi.VarArgs<
+                  (
+                  ffi.Pointer<ffi.Void>,
+                  ffi.Pointer<ffi.Void>
+                  )>)>>('globalEnv_CallVoidMethod')
+      .asFunction<
+      jni.JThrowablePtr Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr,
+          ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>)>();
+
+  /// from: public abstract void onCanceled(org.chromium.net.UrlRequest urlRequest, org.chromium.net.UrlResponseInfo urlResponseInfo)
+  void onCanceled(
+      UrlRequest urlRequest,
+      UrlResponseInfo urlResponseInfo,
+      ) {
+    _onCanceled(reference.pointer, _id_onCanceled as jni.JMethodIDPtr,
+        urlRequest.reference.pointer, urlResponseInfo.reference.pointer)
+        .check();
+  }
+
   /// Maps a specific port to the implemented interface.
   static final Map<int,
       $UrlRequestCallbackProxy_UrlRequestCallbackInterfaceImpl> _$impls = {};
@@ -298,6 +327,14 @@ class UrlRequestCallbackProxy_UrlRequestCallbackInterface extends jni.JObject {
         );
         return jni.nullptr;
       }
+      if ($d ==
+          r'onCanceled(Lorg/chromium/net/UrlRequest;Lorg/chromium/net/UrlResponseInfo;)V') {
+        _$impls[$p]!.onCanceled(
+          $a[0].castTo(const $UrlRequestType(), releaseOriginal: true),
+          $a[1].castTo(const $UrlResponseInfoType(), releaseOriginal: true),
+        );
+        return jni.nullptr;
+      }
     } catch (e) {
       return ProtectedJniExtensions.newDartException(e);
     }
@@ -349,6 +386,9 @@ abstract interface class $UrlRequestCallbackProxy_UrlRequestCallbackInterfaceImp
     required void Function(UrlRequest urlRequest,
             UrlResponseInfo urlResponseInfo, CronetException cronetException)
         onFailed,
+    required void Function(UrlRequest urlRequest,
+            UrlResponseInfo urlResponseInfo)
+        onCanceled,
   }) = _$UrlRequestCallbackProxy_UrlRequestCallbackInterfaceImpl;
 
   void onRedirectReceived(UrlRequest urlRequest,
@@ -360,6 +400,7 @@ abstract interface class $UrlRequestCallbackProxy_UrlRequestCallbackInterfaceImp
   void onSucceeded(UrlRequest urlRequest, UrlResponseInfo urlResponseInfo);
   void onFailed(UrlRequest urlRequest, UrlResponseInfo urlResponseInfo,
       CronetException cronetException);
+  void onCanceled(UrlRequest urlRequest, UrlResponseInfo urlResponseInfo);
 }
 
 class _$UrlRequestCallbackProxy_UrlRequestCallbackInterfaceImpl
@@ -380,11 +421,15 @@ class _$UrlRequestCallbackProxy_UrlRequestCallbackInterfaceImpl
     required void Function(UrlRequest urlRequest,
             UrlResponseInfo urlResponseInfo, CronetException cronetException)
         onFailed,
+    required void Function(UrlRequest urlRequest,
+            UrlResponseInfo urlResponseInfo)
+        onCanceled,
   })  : _onRedirectReceived = onRedirectReceived,
         _onResponseStarted = onResponseStarted,
         _onReadCompleted = onReadCompleted,
         _onSucceeded = onSucceeded,
-        _onFailed = onFailed;
+        _onFailed = onFailed,
+        _onCanceled = onCanceled;
 
   final void Function(UrlRequest urlRequest, UrlResponseInfo urlResponseInfo,
       jni.JString string) _onRedirectReceived;
@@ -396,6 +441,8 @@ class _$UrlRequestCallbackProxy_UrlRequestCallbackInterfaceImpl
       _onSucceeded;
   final void Function(UrlRequest urlRequest, UrlResponseInfo urlResponseInfo,
       CronetException cronetException) _onFailed;
+  final void Function(UrlRequest urlRequest, UrlResponseInfo urlResponseInfo)
+      _onCanceled;
 
   void onRedirectReceived(UrlRequest urlRequest,
       UrlResponseInfo urlResponseInfo, jni.JString string) {
@@ -419,6 +466,10 @@ class _$UrlRequestCallbackProxy_UrlRequestCallbackInterfaceImpl
   void onFailed(UrlRequest urlRequest, UrlResponseInfo urlResponseInfo,
       CronetException cronetException) {
     return _onFailed(urlRequest, urlResponseInfo, cronetException);
+  }
+
+  void onCanceled(UrlRequest urlRequest, UrlResponseInfo urlResponseInfo) {
+    return _onCanceled(urlRequest, urlResponseInfo);
   }
 }
 
@@ -696,6 +747,35 @@ class UrlRequestCallbackProxy extends UrlRequest_Callback {
             urlRequest.reference.pointer,
             urlResponseInfo.reference.pointer,
             cronetException.reference.pointer)
+        .check();
+  }
+
+  static final _id_onCanceled = _class.instanceMethodId(
+    r'onCanceled',
+    r'(Lorg/chromium/net/UrlRequest;Lorg/chromium/net/UrlResponseInfo;)V',
+  );
+
+  static final _onCanceled = ProtectedJniExtensions.lookup<
+      ffi.NativeFunction<
+          jni.JThrowablePtr Function(
+              ffi.Pointer<ffi.Void>,
+              jni.JMethodIDPtr,
+              ffi.VarArgs<
+                  (
+                  ffi.Pointer<ffi.Void>,
+                  ffi.Pointer<ffi.Void>
+                  )>)>>('globalEnv_CallVoidMethod')
+      .asFunction<
+      jni.JThrowablePtr Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr,
+          ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>)>();
+
+  /// from: public void onCanceled(org.chromium.net.UrlRequest urlRequest, org.chromium.net.UrlResponseInfo urlResponseInfo)
+  void onCanceled(
+      UrlRequest urlRequest,
+      UrlResponseInfo urlResponseInfo,
+      ) {
+    _onCanceled(reference.pointer, _id_onCanceled as jni.JMethodIDPtr,
+        urlRequest.reference.pointer, urlResponseInfo.reference.pointer)
         .check();
   }
 }
