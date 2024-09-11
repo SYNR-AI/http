@@ -42,6 +42,7 @@ class UrlRequestCallbackProxy(val callback: UrlRequestCallbackInterface) : UrlRe
             info: UrlResponseInfo?,
             error: CronetException
         )
+        fun onCanceled(request: UrlRequest?, info: UrlResponseInfo?)
     }
 
     override fun onRedirectReceived(
@@ -74,5 +75,9 @@ class UrlRequestCallbackProxy(val callback: UrlRequestCallbackInterface) : UrlRe
         error: CronetException
     ) {
         callback.onFailed(request, info, error);
+    }
+
+    override fun onCanceled(request: UrlRequest?, info: UrlResponseInfo?) {
+        callback.onCanceled(request, info);
     }
 }

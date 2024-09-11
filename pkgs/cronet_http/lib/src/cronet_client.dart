@@ -241,7 +241,9 @@ jb.RequestFinishInfoListenerProxy_RequestFinishInfoListenerInterface
 jb.UrlRequestCallbackProxy_UrlRequestCallbackInterface _urlRequestCallbacks(
     BaseRequest request,
     Completer<StreamedResponse> responseCompleter,
-    _HttpClientRequestProfileWithStreamResponse? profileWithStreamedResponse) {
+    _HttpClientRequestProfileWithStreamResponse? profileWithStreamedResponse,
+    Completer<void> responseStarted,
+    Completer<void> responseFinished) {
   StreamController<List<int>>? responseStream;
   JByteBuffer? jByteBuffer;
   var numRedirects = 0;
@@ -251,6 +253,7 @@ jb.UrlRequestCallbackProxy_UrlRequestCallbackInterface _urlRequestCallbacks(
   return jb.UrlRequestCallbackProxy_UrlRequestCallbackInterface.implement(
       jb.$UrlRequestCallbackProxy_UrlRequestCallbackInterfaceImpl(
     onResponseStarted: (urlRequest, responseInfo) {
+      responseStarted.complete();
       responseStream = StreamController();
       final responseHeaders =
           _cronetToClientHeaders(responseInfo.getAllHeaders());
@@ -350,6 +353,7 @@ jb.UrlRequestCallbackProxy_UrlRequestCallbackInterface _urlRequestCallbacks(
       urlRequest.read(byteBuffer);
     },
     onSucceeded: (urlRequest, responseInfo) {
+      responseFinished.complete();
       Timer(Duration(milliseconds: 1), () {
         responseStream!.sink.close();
         jByteBuffer?.release();
@@ -358,6 +362,7 @@ jb.UrlRequestCallbackProxy_UrlRequestCallbackInterface _urlRequestCallbacks(
 
     },
     onFailed: (urlRequest, responseInfo, cronetException) {
+      responseFinished.complete();
       final error = ClientException(
           'Cronet exception: ${cronetException.toString()}', request.url);
       Timer(Duration(milliseconds: 1), () {
@@ -378,6 +383,25 @@ jb.UrlRequestCallbackProxy_UrlRequestCallbackInterface _urlRequestCallbacks(
         jByteBuffer?.release();
       });
     },
+    onCanceled: (urlRequest, responseInfo) {
+      final error = ClientException(
+          'Cronet exception: request canceled', request.url);
+      Timer(Duration(milliseconds: 1), () {
+        if (responseStream != null) {
+          responseStream!.addError(error);
+          responseStream!.close();
+        }
+
+        if (profileWithStreamedResponse?.profile != null) {
+          if (profileWithStreamedResponse?.profile?.requestData.endTime == null) {
+            profileWithStreamedResponse?.profile?.requestData.closeWithError(error.toString());
+          } else {
+            profileWithStreamedResponse?.profile?.responseData.closeWithError(error.toString());
+          }
+        }
+        jByteBuffer?.release();
+      });
+    }
   ));
 }
 
@@ -476,11 +500,13 @@ class CronetClient extends BaseClient {
     profileWithStreamedResponse?.profile?.requestData.bodySink.add(body);
 
     final responseCompleter = Completer<StreamedResponse>();
+    final responseStartCompleter = Completer<void>();
+    final responseFinishCompleter = Completer<void>();
 
     final builder = engine._engine.newUrlRequestBuilder(
       request.url.toString().toJString(),
       jb.UrlRequestCallbackProxy.new1(
-          _urlRequestCallbacks(request, responseCompleter, profileWithStreamedResponse)),
+          _urlRequestCallbacks(request, responseCompleter, profileWithStreamedResponse, responseStartCompleter, responseFinishCompleter)),
       _executor,
     )..setHttpMethod(request.method.toJString())
     ..setRequestFinishedListener(jb.RequestFinishInfoListenerProxy.new1(_requestFinishedInfoListener(request, responseCompleter, profileWithStreamedResponse), _executor));
@@ -498,7 +524,34 @@ class CronetClient extends BaseClient {
       builder.setUploadDataProvider(
           jb.UploadDataProviders.create2(body.toJByteBuffer()), _executor);
     }
-    builder.build().start();
+    var req = builder.build();
+    req.start();
+
+    var connectTimeout = request.connectTimeout ?? const Duration(seconds: 15);
+    var receiveTimeout = request.receiveTimeout ?? const Duration(minutes: 5);
+    var requested = false;
+    var responded = false;
+    var canceled = false;
+    Timer(connectTimeout, () {
+      if (!requested && !canceled) {
+        canceled = true;
+        req.cancel();
+      }
+    });
+
+    unawaited(responseStartCompleter.future.whenComplete(() {
+      requested = true;
+      Timer(receiveTimeout, () {
+        if (!responded && !canceled) {
+          canceled = true;
+          req.cancel();
+        }
+      });
+    }));
+    unawaited(responseFinishCompleter.future.whenComplete(() {
+      responded = true;
+    }));
+
     return responseCompleter.future;
   }
 }
