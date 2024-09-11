@@ -413,6 +413,7 @@ jb.UrlRequestCallbackProxy_UrlRequestCallbackInterface _urlRequestCallbacks(
 /// network stack.
 class CronetClient extends BaseClient {
   static final _executor = jb.Executors.newCachedThreadPool();
+  static bool enableCronetTimeout = false;
   CronetEngine? _engine;
   bool _isClosed = false;
 
@@ -530,30 +531,32 @@ class CronetClient extends BaseClient {
     var req = builder.build();
     req.start();
 
-    var connectTimeout = request.connectTimeout ?? const Duration(seconds: 15);
-    var receiveTimeout = request.receiveTimeout ?? const Duration(minutes: 5);
-    var requested = false;
-    var responded = false;
-    var canceled = false;
-    Timer(connectTimeout, () {
-      if (!requested && !canceled) {
-        canceled = true;
-        req.cancel();
-      }
-    });
-
-    unawaited(responseStartCompleter.future.whenComplete(() {
-      requested = true;
-      Timer(receiveTimeout, () {
-        if (!responded && !canceled) {
+    if (enableCronetTimeout) {
+      var connectTimeout = request.connectTimeout ?? const Duration(seconds: 15);
+      var receiveTimeout = request.receiveTimeout ?? const Duration(minutes: 5);
+      var requested = false;
+      var responded = false;
+      var canceled = false;
+      Timer(connectTimeout, () {
+        if (!requested && !canceled) {
           canceled = true;
           req.cancel();
         }
       });
-    }));
-    unawaited(responseFinishCompleter.future.whenComplete(() {
-      responded = true;
-    }));
+
+      unawaited(responseStartCompleter.future.whenComplete(() {
+        requested = true;
+        Timer(receiveTimeout, () {
+          if (!responded && !canceled) {
+            canceled = true;
+            req.cancel();
+          }
+        });
+      }));
+      unawaited(responseFinishCompleter.future.whenComplete(() {
+        responded = true;
+      }));
+    }
 
     return responseCompleter.future;
   }
