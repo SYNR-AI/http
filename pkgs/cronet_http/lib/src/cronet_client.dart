@@ -387,6 +387,9 @@ jb.UrlRequestCallbackProxy_UrlRequestCallbackInterface _urlRequestCallbacks(
       final error = ClientException(
           'Cronet exception: request canceled', request.url);
       Timer(Duration(milliseconds: 1), () {
+        if (!responseCompleter.isCompleted) {
+          responseCompleter.completeError(error);
+        }
         if (responseStream != null) {
           responseStream!.addError(error);
           responseStream!.close();
