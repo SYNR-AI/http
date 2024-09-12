@@ -537,16 +537,18 @@ class CronetClient extends BaseClient {
       var requested = false;
       var responded = false;
       var canceled = false;
-      Timer(connectTimeout, () {
+      var connectTimer = Timer(connectTimeout, () {
         if (!requested && !canceled) {
           canceled = true;
           req.cancel();
         }
       });
 
+      Timer? responseTimer;
       unawaited(responseStartCompleter.future.whenComplete(() {
         requested = true;
-        Timer(receiveTimeout, () {
+        connectTimer.cancel();
+        responseTimer = Timer(receiveTimeout, () {
           if (!responded && !canceled) {
             canceled = true;
             req.cancel();
@@ -554,6 +556,7 @@ class CronetClient extends BaseClient {
         });
       }));
       unawaited(responseFinishCompleter.future.whenComplete(() {
+        responseTimer?.cancel();
         responded = true;
       }));
     }
