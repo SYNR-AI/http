@@ -137,6 +137,10 @@ class CronetEngine {
     }
   }
 
+  void startNetLogToFile(String logFilePath, bool logBytes) {
+    _engine.startNetLogToFile(logFilePath.toJString(), logBytes);
+  }
+
   void close() {
     if (!_isClosed) {
       _engine
